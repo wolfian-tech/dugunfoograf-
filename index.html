@@ -174,18 +174,24 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
   </div>
 </div>
 
+<!-- ══ QR ══ -->
 <div class="screen" id="qr-screen">
   <div class="top-bar">
     <div class="logo">Perihan &amp; Çağlar</div>
     <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
   </div>
-  <div class="content" style="text-align:center; align-items:center; justify-content:center; display:flex">
+  <div class="content">
     <div class="section-title">Masa QR Kodu</div>
-    <div style="background:#fff; padding:20px; border-radius:12px; border:.5px solid var(--border); margin:20px 0">
-      <img id="qr-img" src="" alt="QR Kod" style="width:200px; height:200px">
-      <div style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold-dark); margin-top:10px">Perihan &amp; Çağlar — 2026</div>
+    <div class="qr-card">
+      <img id="qr-img" src="" alt="QR Kod">
+      <div class="qr-lbl">Perihan &amp; Çağlar — 2026</div>
     </div>
-    <button class="btn-primary" onclick="copyURL()"><i class="ti ti-copy"></i> Linki Kopyala</button>
+    <div class="url-box" id="qr-url-box">URL yükleniyor...</div>
+    <div class="qr-note">Bu QR kodu masa kartlarına ekleyin. Misafirler okutarak fotoğraf yükleme ekranına ulaşır.</div>
+    <div class="btn-row">
+      <a id="qr-dl-link" class="btn-primary" href="#" target="_blank"><i class="ti ti-download"></i> İndir</a>
+      <button class="btn-secondary" onclick="copyURL()"><i class="ti ti-copy"></i> Linki Kopyala</button>
+    </div>
   </div>
 </div>
 
