@@ -98,7 +98,7 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
     </svg>
     <div class="couple-names">Perihan &amp; Çağlar</div>
     <h1>Anılarınızı<br><em>bizimle paylaşın</em></h1>
-    <p>Bu özel günde çektiğiniz fotoğrafları yükleyin — her an değerli 🤍</p>
+    <p>Bu özel günde çektiğiniz fotoğrafları yükleyin — her an değerli ula 🤍</p>
     <div class="btn-group">
       <button class="btn-primary" onclick="showScreen('upload-screen')"><i class="ti ti-camera"></i> Fotoğraf Yükle</button>
       <button class="btn-secondary" onclick="showScreen('admin-login')"><i class="ti ti-crown"></i> Perihan &amp; Çağlar Girişi</button>
@@ -174,7 +174,7 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
   </div>
 </div>
 
-<!-- ══ QR ══ -->
+<!-- QR -->
 <div class="screen" id="qr-screen">
   <div class="top-bar">
     <div class="logo">Perihan &amp; Çağlar</div>
@@ -423,9 +423,13 @@ function downloadAll() {
 //  UTILS
 // ════════════════════════════════════════════
 function buildQR() {
-  const url = window.location.href.split('#')[0];
-  document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(url)}&color=2c2016`;
+  const url = window.location.href.split('?')[0].split('#')[0];
+  document.getElementById('qr-url-box').textContent = url;
+  const src = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=' + encodeURIComponent(url) + '&color=2c2016&bgcolor=ffffff&margin=10';
+  document.getElementById('qr-img').src = src;
+  document.getElementById('qr-dl-link').href = src;
 }
+
 function copyURL() { navigator.clipboard.writeText(window.location.href.split('#')[0]); showToast('Link kopyalandı!'); }
 function openLightbox(id) {
   const p = allPhotos.find(x => x.id === id);
