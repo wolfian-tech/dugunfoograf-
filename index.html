@@ -1,432 +1,569 @@
-
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perihan & Çağlar — Anı Paylaşım</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --rose:#c8a4a4;--rose-light:#f5ede8;--rose-dark:#8b5e5e;
-    --gold:#c9a84c;--gold-light:#faf4e1;--gold-dark:#7a5c1e;
-    --cream:#fdfaf6;--ink:#2c2016;--muted:#8a7c6e;
-    --border:rgba(201,168,76,0.25);
-  }
-  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink)}
-  #app{min-height:100vh;display:flex;flex-direction:column}
-  .screen{display:none;flex-direction:column;min-height:100vh;animation:fadeIn 0.4s ease}
-  .screen.active{display:flex}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  .top-bar{padding:1.5rem 1.5rem 0;display:flex;align-items:center;justify-content:space-between}
-  .logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:0.15em;color:var(--gold-dark);text-transform:uppercase}
-  .back-btn{background:none;border:0.5px solid var(--border);border-radius:20px;padding:6px 16px;font-family:'Jost',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;letter-spacing:0.05em}
-  .back-btn:hover{border-color:var(--gold);color:var(--gold-dark)}
-  #landing{background:linear-gradient(160deg,#fdfaf6 0%,#f5ede8 100%)}
-  .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center}
-  .couple-icon{width:72px;height:72px;margin-bottom:1.2rem;opacity:0.85}
-  .hero h1{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;line-height:1.2;color:var(--ink);margin-bottom:0.4rem}
-  .hero h1 em{font-style:italic;color:var(--rose-dark)}
-  .couple-names{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--gold-dark);margin-bottom:0.4rem;letter-spacing:0.05em}
-  .hero p{font-size:13px;color:var(--muted);letter-spacing:0.05em;margin-bottom:2.5rem;max-width:280px;line-height:1.8}
-  .btn-group{display:flex;flex-direction:column;gap:12px;width:100%;max-width:280px}
-  .btn-primary{background:var(--gold-dark);color:#fff;border:none;border-radius:4px;padding:14px 24px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;transition:all 0.2s}
-  .btn-primary:hover{background:var(--rose-dark)}
-  .btn-secondary{background:transparent;color:var(--gold-dark);border:0.5px solid var(--gold);border-radius:4px;padding:14px 24px;font-family:'Jost',sans-serif;font-size:13px;font-weight:400;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;transition:all 0.2s}
-  .btn-secondary:hover{background:var(--gold-light)}
-  #upload-screen .content{flex:1;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:1.5rem}
-  .section-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--ink);margin-bottom:0.25rem}
-  .section-sub{font-size:12px;color:var(--muted);letter-spacing:0.05em}
-  .name-input-wrap{display:flex;flex-direction:column;gap:8px}
-  .name-input-wrap label{font-size:12px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
-  .name-input-wrap input{border:0.5px solid var(--border);border-radius:4px;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;background:white;color:var(--ink);outline:none}
-  .name-input-wrap input:focus{border-color:var(--gold)}
-  .drop-zone{border:1.5px dashed var(--border);border-radius:8px;padding:2rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;transition:all 0.2s;background:white;min-height:160px;position:relative}
-  .drop-zone:hover,.drop-zone.dragover{border-color:var(--gold);background:var(--gold-light)}
-  .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-  .drop-text{font-size:13px;color:var(--muted);text-align:center;line-height:1.7}
-  .drop-text strong{color:var(--gold-dark);font-weight:500}
-  .preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .preview-item{aspect-ratio:1;border-radius:6px;overflow:hidden;position:relative;background:#f0e8e0}
-  .preview-item img{width:100%;height:100%;object-fit:cover;display:block}
-  .preview-item .remove-btn{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:22px;height:22px;color:white;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
-  .upload-btn{background:var(--gold-dark);color:#fff;border:none;border-radius:4px;padding:16px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
-  .upload-btn:hover{background:var(--rose-dark)}
-  .upload-btn:disabled{opacity:0.5;cursor:not-allowed}
-  .progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;display:none}
-  .progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.3s}
-  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:12px 24px;border-radius:24px;font-size:13px;z-index:1000;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:nowrap}
-  .toast.show{opacity:1}
-  #admin-screen .content{flex:1;padding:1.5rem;display:flex;flex-direction:column;gap:1.5rem}
-  .stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .stat-card{background:white;border:0.5px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
-  .stat-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;color:var(--gold-dark)}
-  .stat-label{font-size:11px;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-top:2px}
-  .filter-bar{display:flex;gap:8px;flex-wrap:wrap}
-  .filter-btn{background:white;border:0.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:'Jost',sans-serif}
-  .filter-btn.active,.filter-btn:hover{background:var(--gold-light);border-color:var(--gold);color:var(--gold-dark)}
-  .photos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-  .photo-card{background:white;border:0.5px solid var(--border);border-radius:8px;overflow:hidden}
-  .photo-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
-  .photo-card .photo-meta{padding:8px 10px;display:flex;align-items:center;justify-content:space-between}
-  .guest-name{font-size:12px;font-weight:500;color:var(--ink)}
-  .photo-time{font-size:11px;color:var(--muted)}
-  .dl-btn{background:none;border:none;cursor:pointer;color:var(--gold);font-size:18px;padding:4px;line-height:1}
-  .dl-btn:hover{color:var(--gold-dark)}
-  .dl-all-btn{background:var(--gold-dark);color:#fff;border:none;border-radius:4px;padding:14px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;width:100%}
-  .dl-all-btn:hover{background:var(--rose-dark)}
-  .empty-state{text-align:center;padding:3rem 1rem;color:var(--muted)}
-  .empty-state p{font-size:13px;line-height:1.8;margin-top:1rem}
-  #admin-login .content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem}
-  .login-card{background:white;border:0.5px solid var(--border);border-radius:12px;padding:2rem;width:100%;max-width:320px;display:flex;flex-direction:column;gap:1.2rem}
-  .login-card h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;text-align:center}
-  .input-group{display:flex;flex-direction:column;gap:6px}
-  .input-group label{font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
-  .input-group input{border:0.5px solid var(--border);border-radius:4px;padding:11px 13px;font-size:14px;font-family:'Jost',sans-serif;outline:none;color:var(--ink)}
-  .input-group input:focus{border-color:var(--gold)}
-  .error-msg{font-size:12px;color:#c0392b;text-align:center;min-height:18px}
-  #qr-screen .content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:1.2rem;text-align:center}
-  .qr-wrapper{background:white;border:0.5px solid var(--border);border-radius:12px;padding:20px;display:inline-flex;flex-direction:column;align-items:center;gap:12px}
-  .qr-wrapper img{width:200px;height:200px;display:block;border-radius:4px}
-  .qr-logo{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--gold-dark);letter-spacing:0.05em}
-  .qr-note{font-size:12px;color:var(--muted);max-width:260px;line-height:1.8}
-  .url-box{font-size:11px;color:var(--gold-dark);word-break:break-all;max-width:280px;background:var(--gold-light);padding:8px 12px;border-radius:4px;line-height:1.6}
-  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem}
-  .lightbox.open{display:flex}
-  .lightbox img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:4px}
-  .lightbox-close{position:fixed;top:16px;right:16px;background:white;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rose:#c8a4a4;--rose-dark:#8b5e5e;
+  --gold:#c9a84c;--gold-light:#faf4e1;--gold-dark:#7a5c1e;
+  --cream:#fdfaf6;--ink:#2c2016;--muted:#8a7c6e;
+  --border:rgba(201,168,76,0.25);
+}
+html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif}
+.screen{display:none;flex-direction:column;min-height:100vh;animation:fadeIn .35s ease}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.top-bar{padding:1.4rem 1.4rem 0;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;letter-spacing:.15em;color:var(--gold-dark);text-transform:uppercase}
+.back-btn{background:none;border:.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'Jost',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s}
+.back-btn:hover{border-color:var(--gold);color:var(--gold-dark)}
+/* SETUP */
+#setup-screen .content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.4rem;gap:1.4rem}
+.setup-card{background:#fff;border:.5px solid var(--border);border-radius:14px;padding:1.8rem;width:100%;max-width:500px;display:flex;flex-direction:column;gap:1.2rem}
+.setup-card h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;text-align:center}
+.step-list{display:flex;flex-direction:column;gap:.9rem;counter-reset:step}
+.step{display:flex;gap:12px;align-items:flex-start;counter-increment:step}
+.step::before{content:counter(step);min-width:24px;height:24px;border-radius:50%;background:var(--gold-dark);color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+.step p{font-size:13px;color:var(--ink);line-height:1.75}
+.step a{color:var(--gold-dark);text-decoration:underline}
+.step code{background:var(--gold-light);padding:2px 6px;border-radius:3px;font-size:12px;font-family:monospace;color:var(--gold-dark)}
+.lbl{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:6px}
+.txt-input{width:100%;border:.5px solid var(--border);border-radius:4px;padding:11px 13px;font-family:'Jost',sans-serif;font-size:13px;background:#fff;color:var(--ink);outline:none;transition:border .2s}
+.txt-input:focus{border-color:var(--gold)}
+.txt-input.mono{font-family:monospace;font-size:12px}
+.err{font-size:12px;color:#c0392b;min-height:16px;text-align:center}
+/* BUTTONS */
+.btn-primary{background:var(--gold-dark);color:#fff;border:none;border-radius:4px;padding:13px 22px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:.08em;cursor:pointer;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:hover{background:var(--rose-dark)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-secondary{background:transparent;color:var(--gold-dark);border:.5px solid var(--gold);border-radius:4px;padding:13px 22px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.08em;cursor:pointer;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-secondary:hover{background:var(--gold-light)}
+/* LANDING */
+#landing{background:linear-gradient(160deg,#fdfaf6 0%,#f5ede8 100%)}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center}
+.couple-names{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-style:italic;color:var(--gold-dark);margin-bottom:.3rem;letter-spacing:.04em}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.2;color:var(--ink);margin-bottom:.5rem}
+.hero h1 em{font-style:italic;color:var(--rose-dark)}
+.hero p{font-size:13px;color:var(--muted);margin-bottom:2.2rem;max-width:270px;line-height:1.85}
+.btn-group{display:flex;flex-direction:column;gap:12px;width:100%;max-width:280px}
+/* UPLOAD */
+#upload-screen .content{flex:1;padding:1.8rem 1.4rem;display:flex;flex-direction:column;gap:1.4rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;color:var(--ink);margin-bottom:.2rem}
+.section-sub{font-size:12px;color:var(--muted)}
+.drop-zone{border:1.5px dashed var(--border);border-radius:8px;padding:1.8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:all .2s;background:#fff;min-height:140px;position:relative}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--gold);background:var(--gold-light)}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-text{font-size:13px;color:var(--muted);text-align:center;line-height:1.7}
+.drop-text strong{color:var(--gold-dark)}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.preview-item{aspect-ratio:1;border-radius:6px;overflow:hidden;position:relative;background:#f0e8e0}
+.preview-item img{width:100%;height:100%;object-fit:cover;display:block}
+.remove-btn{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.5);border:none;border-radius:50%;width:22px;height:22px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px}
+.progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;display:none}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
+.size-note{font-size:11px;color:var(--muted);text-align:center;display:none}
+/* ADMIN */
+#admin-screen .content{flex:1;padding:1.4rem;display:flex;flex-direction:column;gap:1.4rem}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat-card{background:#fff;border:.5px solid var(--border);border-radius:8px;padding:.9rem;text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--gold-dark)}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{background:#fff;border:.5px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'Jost',sans-serif}
+.filter-btn.active,.filter-btn:hover{background:var(--gold-light);border-color:var(--gold);color:var(--gold-dark)}
+.photos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:540px){.photos-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:800px){.photos-grid{grid-template-columns:repeat(4,1fr)}}
+.photo-card{background:#fff;border:.5px solid var(--border);border-radius:8px;overflow:hidden}
+.photo-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;cursor:zoom-in}
+.photo-meta{padding:7px 10px;display:flex;align-items:center;justify-content:space-between}
+.guest-name{font-size:12px;font-weight:500;color:var(--ink)}
+.photo-time{font-size:11px;color:var(--muted)}
+.dl-btn{background:none;border:none;cursor:pointer;color:var(--gold);font-size:20px;padding:3px;line-height:1}
+.dl-btn:hover{color:var(--gold-dark)}
+.empty-state{text-align:center;padding:3.5rem 1rem;color:var(--muted)}
+.empty-state i{font-size:38px;opacity:.3;display:block;margin-bottom:1rem}
+.empty-state p{font-size:13px;line-height:1.9}
+/* LOGIN */
+#admin-login .content{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1.4rem}
+.login-card{background:#fff;border:.5px solid var(--border);border-radius:12px;padding:2rem;width:100%;max-width:310px;display:flex;flex-direction:column;gap:1.2rem}
+.login-card h2{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:300;text-align:center}
+/* QR */
+#qr-screen .content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.4rem;gap:1.2rem;text-align:center}
+.qr-card{background:#fff;border:.5px solid var(--border);border-radius:12px;padding:22px;display:inline-flex;flex-direction:column;align-items:center;gap:10px}
+#qr-img{width:200px;height:200px;display:block;border-radius:4px}
+.qr-lbl{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--gold-dark)}
+.url-box{font-size:11px;color:var(--gold-dark);word-break:break-all;max-width:300px;background:var(--gold-light);padding:9px 13px;border-radius:6px;line-height:1.7}
+.qr-note{font-size:12px;color:var(--muted);max-width:270px;line-height:1.85}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:320px}
+.btn-row>*{flex:1;min-width:120px;font-size:12px;padding:11px 14px}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999;display:none;align-items:center;justify-content:center;padding:1rem}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:4px}
+.lb-close{position:fixed;top:14px;right:14px;background:#fff;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:18px;z-index:1000}
+/* TOAST */
+.toast{position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 22px;border-radius:24px;font-size:13px;z-index:1001;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;max-width:92vw;text-align:center}
+.toast.show{opacity:1}
+/* LOADING */
+.loading{position:fixed;inset:0;background:rgba(253,250,246,.88);z-index:998;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.loading.show{display:flex}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:13px;color:var(--muted)}
 </style>
+</head>
+<body>
 
-<div id="app">
-  <div class="toast" id="toast"></div>
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()"><i class="ti ti-x"></i></button>
-    <img id="lightbox-img" src="" alt="">
-  </div>
+<div class="toast" id="toast"></div>
+<div class="loading" id="loading"><div class="spinner"></div><p id="loading-text">Yükleniyor...</p></div>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()"><i class="ti ti-x"></i></button>
+  <img id="lb-img" src="" alt="">
+</div>
 
-  <!-- LANDING -->
-  <div class="screen active" id="landing">
-    <div class="top-bar"><div class="logo">Perihan &amp; Çağlar</div></div>
-    <div class="hero">
-      <svg class="couple-icon" viewBox="0 0 72 72" fill="none">
-        <circle cx="24" cy="20" r="10" stroke="#c8a4a4" stroke-width="1.5"/>
-        <path d="M8 52c0-8.8 7.2-16 16-16s16 7.2 16 16" stroke="#c8a4a4" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="48" cy="20" r="10" stroke="#c9a84c" stroke-width="1.5"/>
-        <path d="M32 52c0-8.8 7.2-16 16-16s16 7.2 16 16" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <div class="couple-names">Perihan &amp; Çağlar</div>
-      <h1>Anılarınızı<br><em>bizimle paylaşın</em></h1>
-      <p>Bu özel günde çektiğiniz fotoğrafları yükleyin — her an değerli 🤍</p>
-      <div class="btn-group">
-        <button class="btn-primary" onclick="showScreen('upload-screen')"><i class="ti ti-camera" aria-hidden="true"></i> Fotoğraf Yükle</button>
-        <button class="btn-secondary" onclick="showScreen('admin-login')"><i class="ti ti-crown" aria-hidden="true"></i> Perihan &amp; Çağlar Girişi</button>
-        <button class="btn-secondary" onclick="showScreen('qr-screen')" style="font-size:11px;padding:10px 24px"><i class="ti ti-qrcode" aria-hidden="true"></i> QR Kodu Göster</button>
+<!-- ══ SETUP ══ -->
+<div class="screen active" id="setup-screen">
+  <div class="top-bar"><div class="logo">Perihan &amp; Çağlar</div></div>
+  <div class="content">
+    <div class="setup-card">
+      <h2>⚙️ İlk Kurulum</h2>
+      <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.8">
+        Misafirlerin fotoğraflarını tüm cihazlarda görebilmek için <strong>Firebase</strong> bağlantısı gerekli.
+      </p>
+      <div class="step-list">
+        <div class="step"><p><a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → <strong>Proje Oluştur</strong> → isim: <code>perihan-caglar</code></p></div>
+        <div class="step"><p>Sol menü → <strong>Realtime Database</strong> → <strong>Veritabanı Oluştur</strong> → <strong>Test modunda başlat</strong></p></div>
+        <div class="step"><p>Veritabanı URL'ini kopyalayın (örn: <code>https://perihan-caglar-xxxx-rtdb.firebaseio.com</code>)</p></div>
+        <div class="step"><p>⚙️ <strong>Proje Ayarları</strong> → aşağı kaydır → <strong>Web uygulaması ekle</strong> (&lt;/&gt; butonu) → <code>apiKey</code> değerini kopyalayın</p></div>
       </div>
-    </div>
-  </div>
-
-  <!-- UPLOAD -->
-  <div class="screen" id="upload-screen">
-    <div class="top-bar">
-      <div class="logo">Perihan &amp; Çağlar</div>
-      <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
-    </div>
-    <div class="content">
       <div>
-        <div class="section-title">Fotoğraf Yükle</div>
-        <div class="section-sub">Perihan &amp; Çağlar için çektiğiniz anları paylaşın 🤍</div>
+        <label class="lbl">Firebase Database URL</label>
+        <input class="txt-input mono" id="cfg-db-url" placeholder="https://perihan-caglar-xxxx-rtdb.firebaseio.com">
       </div>
-      <div class="name-input-wrap">
-        <label>Adınız</label>
-        <input type="text" id="guest-name" placeholder="Adınızı yazın..." maxlength="40">
-      </div>
-      <div class="drop-zone" id="drop-zone">
-        <input type="file" id="file-input" accept="image/*" multiple>
-        <i class="ti ti-photo-plus" aria-hidden="true" style="font-size:36px;color:var(--rose)"></i>
-        <div class="drop-text"><strong>Fotoğraf seçin</strong> veya buraya sürükleyin<br><span style="font-size:11px">JPG, PNG, WEBP — çoklu seçim desteklenir</span></div>
-      </div>
-      <div class="preview-grid" id="preview-grid" style="display:none"></div>
-      <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-      <button class="upload-btn" id="upload-btn" onclick="uploadPhotos()" disabled>
-        <i class="ti ti-upload" aria-hidden="true"></i> Paylaş
-      </button>
-    </div>
-  </div>
-
-  <!-- ADMIN LOGIN -->
-  <div class="screen" id="admin-login">
-    <div class="top-bar">
-      <div class="logo">Perihan &amp; Çağlar</div>
-      <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
-    </div>
-    <div class="content">
-      <div class="login-card">
-        <h2>Perihan &amp; Çağlar</h2>
-        <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.7">Özel giriş — şifrenizi girin</p>
-        <div class="input-group">
-          <label>Şifre</label>
-          <input type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
-        </div>
-        <div class="error-msg" id="login-error"></div>
-        <button class="btn-primary" onclick="adminLogin()">Giriş Yap</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ADMIN GALLERY -->
-  <div class="screen" id="admin-screen">
-    <div class="top-bar">
-      <div class="logo">Perihan &amp; Çağlar</div>
-      <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-door-exit"></i> Çıkış</button>
-    </div>
-    <div class="content">
       <div>
-        <div class="section-title">Tüm Anılar</div>
-        <div class="section-sub" id="admin-sub">Yükleniyor...</div>
+        <label class="lbl">Firebase API Key</label>
+        <input class="txt-input mono" id="cfg-api-key" placeholder="AIzaSy...">
       </div>
-      <div class="stats-row">
-        <div class="stat-card"><div class="stat-num" id="stat-photos">0</div><div class="stat-label">Fotoğraf</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-guests">0</div><div class="stat-label">Misafir</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-today">0</div><div class="stat-label">Bugün</div></div>
-      </div>
-      <div class="filter-bar" id="filter-bar"></div>
-      <div id="admin-gallery"></div>
-      <button class="dl-all-btn" id="dl-all-btn" onclick="downloadAll()" style="display:none">
-        <i class="ti ti-download" aria-hidden="true"></i> Tümünü İndir
-      </button>
+      <div class="err" id="setup-err"></div>
+      <button class="btn-primary" onclick="saveConfig()"><i class="ti ti-check"></i> Kaydet &amp; Başlat</button>
+      <p style="font-size:11px;color:var(--muted);text-align:center">Bilgiler yalnızca tarayıcınıza kaydedilir.</p>
     </div>
   </div>
+</div>
 
-  <!-- QR -->
-  <div class="screen" id="qr-screen">
-    <div class="top-bar">
-      <div class="logo">Perihan &amp; Çağlar</div>
-      <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
+<!-- ══ LANDING ══ -->
+<div class="screen" id="landing">
+  <div class="top-bar"><div class="logo">Perihan &amp; Çağlar</div></div>
+  <div class="hero">
+    <svg width="68" height="68" viewBox="0 0 72 72" fill="none" style="margin-bottom:1rem;opacity:.85">
+      <circle cx="24" cy="20" r="10" stroke="#c8a4a4" stroke-width="1.5"/>
+      <path d="M8 52c0-8.8 7.2-16 16-16s16 7.2 16 16" stroke="#c8a4a4" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="48" cy="20" r="10" stroke="#c9a84c" stroke-width="1.5"/>
+      <path d="M32 52c0-8.8 7.2-16 16-16s16 7.2 16 16" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <div class="couple-names">Perihan &amp; Çağlar</div>
+    <h1>Anılarınızı<br><em>bizimle paylaşın</em></h1>
+    <p>Bu özel günde çektiğiniz fotoğrafları yükleyin — her an değerli 🤍</p>
+    <div class="btn-group">
+      <button class="btn-primary" onclick="showScreen('upload-screen')"><i class="ti ti-camera"></i> Fotoğraf Yükle</button>
+      <button class="btn-secondary" onclick="showScreen('admin-login')"><i class="ti ti-crown"></i> Perihan &amp; Çağlar Girişi</button>
+      <button class="btn-secondary" onclick="showScreen('qr-screen')" style="font-size:11px;padding:10px 22px"><i class="ti ti-qrcode"></i> QR Kodu Göster</button>
     </div>
-    <div class="content">
-      <div class="section-title">Masa QR Kodu</div>
-      <div class="qr-wrapper" id="qr-wrapper">
-        <img id="qr-img" src="" alt="QR Kod">
-        <div class="qr-logo">Perihan &amp; Çağlar — 2026</div>
+  </div>
+</div>
+
+<!-- ══ UPLOAD ══ -->
+<div class="screen" id="upload-screen">
+  <div class="top-bar">
+    <div class="logo">Perihan &amp; Çağlar</div>
+    <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
+  </div>
+  <div class="content">
+    <div>
+      <div class="section-title">Fotoğraf Yükle</div>
+      <div class="section-sub">Perihan &amp; Çağlar için çektiğiniz anları paylaşın 🤍</div>
+    </div>
+    <div>
+      <label class="lbl" for="guest-name">Adınız</label>
+      <input class="txt-input" type="text" id="guest-name" placeholder="Adınızı yazın..." maxlength="40">
+    </div>
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept="image/*" multiple>
+      <i class="ti ti-photo-plus" style="font-size:36px;color:var(--rose)"></i>
+      <div class="drop-text"><strong>Fotoğraf seçin</strong> veya buraya sürükleyin<br><span style="font-size:11px">JPG, PNG, WEBP — çoklu seçim desteklenir</span></div>
+    </div>
+    <div class="preview-grid" id="preview-grid" style="display:none"></div>
+    <div class="size-note" id="size-note"></div>
+    <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <button class="btn-primary" id="upload-btn" onclick="uploadPhotos()" disabled style="width:100%">
+      <i class="ti ti-upload"></i> Paylaş
+    </button>
+  </div>
+</div>
+
+<!-- ══ ADMIN LOGIN ══ -->
+<div class="screen" id="admin-login">
+  <div class="top-bar">
+    <div class="logo">Perihan &amp; Çağlar</div>
+    <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
+  </div>
+  <div class="content">
+    <div class="login-card">
+      <h2>Perihan &amp; Çağlar</h2>
+      <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.7">Özel giriş — şifrenizi girin</p>
+      <div>
+        <label class="lbl">Şifre</label>
+        <input class="txt-input" type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
       </div>
-      <div class="url-box" id="qr-url-box">URL yükleniyor...</div>
-      <div class="qr-note">Bu QR kodu masa kartlarına ekleyin. Misafirler telefonlarıyla okutarak doğrudan fotoğraf yükleme ekranına ulaşacak.</div>
-      <button class="btn-primary" id="qr-dl-btn" onclick="downloadQR()"><i class="ti ti-download"></i> QR Kodu İndir (PNG)</button>
+      <div class="err" id="login-error"></div>
+      <button class="btn-primary" onclick="adminLogin()">Giriş Yap</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN GALLERY ══ -->
+<div class="screen" id="admin-screen">
+  <div class="top-bar">
+    <div class="logo">Perihan &amp; Çağlar</div>
+    <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-door-exit"></i> Çıkış</button>
+  </div>
+  <div class="content">
+    <div>
+      <div class="section-title">Tüm Anılar</div>
+      <div class="section-sub" id="admin-sub">Yükleniyor...</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="stat-photos">0</div><div class="stat-label">Fotoğraf</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-guests">0</div><div class="stat-label">Misafir</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-today">0</div><div class="stat-label">Bugün</div></div>
+    </div>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div id="admin-gallery"></div>
+    <button class="btn-primary" id="dl-all-btn" onclick="downloadAll()" style="display:none;width:100%">
+      <i class="ti ti-download"></i> Tümünü İndir
+    </button>
+  </div>
+</div>
+
+<!-- ══ QR ══ -->
+<div class="screen" id="qr-screen">
+  <div class="top-bar">
+    <div class="logo">Perihan &amp; Çağlar</div>
+    <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
+  </div>
+  <div class="content">
+    <div class="section-title">Masa QR Kodu</div>
+    <div class="qr-card">
+      <img id="qr-img" src="" alt="QR Kod">
+      <div class="qr-lbl">Perihan &amp; Çağlar — 2026</div>
+    </div>
+    <div class="url-box" id="qr-url-box">URL yükleniyor...</div>
+    <div class="qr-note">Bu QR kodu masa kartlarına ekleyin. Misafirler okutarak fotoğraf yükleme ekranına ulaşır.</div>
+    <div class="btn-row">
+      <a id="qr-dl-link" class="btn-primary" href="#" target="_blank"><i class="ti ti-download"></i> İndir</a>
       <button class="btn-secondary" onclick="copyURL()"><i class="ti ti-copy"></i> Linki Kopyala</button>
     </div>
   </div>
 </div>
 
+<!-- Firebase compat SDK (global, window scope sorunsuz) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
 <script>
-const ADMIN_PASS='edya2026';
-let selectedFiles=[];
-let allPhotos=[];
-let activeFilter='all';
-let qrImageData=null;
+const ADMIN_PASS = 'edya2026';
+const LS_CFG = 'pc2026_cfg';
+let selectedFiles = [];
+let allPhotos = [];
+let activeFilter = 'all';
+let fbDb = null;
 
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if(id==='admin-screen')loadAdminGallery();
-  if(id==='qr-screen')buildQR();
+// ── FIREBASE ──
+function initFirebase(apiKey, dbUrl) {
+  try {
+    // Önceki uygulama varsa sil
+    const existingApp = firebase.apps.find(a => a.name === 'pc2026');
+    if (existingApp) existingApp.delete();
+
+    const app = firebase.initializeApp({ apiKey, databaseURL: dbUrl }, 'pc2026');
+    fbDb = firebase.database(app);
+    return true;
+  } catch(e) {
+    console.error('Firebase init:', e);
+    return false;
+  }
 }
 
-function showToast(msg,dur=2500){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),dur);
+async function fbPush(data) {
+  return fbDb.ref('photos').push(data);
 }
 
-// QR — Google Charts API ile üret, canvas'a çiz, indir
-function buildQR(){
-  const url=window.location.href;
-  document.getElementById('qr-url-box').textContent=url;
-  const encoded=encodeURIComponent(url);
-  const apiUrl=`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encoded}&bgcolor=ffffff&color=2c2016&margin=10`;
-  const img=document.getElementById('qr-img');
-  img.src=apiUrl;
-  img.onload=()=>{
-    // canvas'a çizerek data URL al (indirme için)
-    try{
-      const c=document.createElement('canvas');
-      c.width=400;c.height=400;
-      const ctx=c.getContext('2d');
-      ctx.drawImage(img,0,0);
-      qrImageData=c.toDataURL('image/png');
-    }catch(e){
-      qrImageData=null;
+async function fbGetAll() {
+  const snap = await fbDb.ref('photos').once('value');
+  const results = [];
+  if (snap.exists()) {
+    snap.forEach(child => results.push({ id: child.key, ...child.val() }));
+  }
+  return results;
+}
+
+// ── INIT ──
+window.addEventListener('load', () => {
+  try {
+    const cfg = JSON.parse(localStorage.getItem(LS_CFG));
+    if (cfg && cfg.apiKey && cfg.dbUrl) {
+      const ok = initFirebase(cfg.apiKey, cfg.dbUrl);
+      if (ok) { showScreen('landing'); return; }
     }
-  };
-  img.onerror=()=>{
-    img.alt='QR kod yüklenemedi';
-    document.getElementById('qr-url-box').textContent='QR yüklenemedi — linki kopyalayın: '+url;
-  };
-}
+  } catch(e) {}
+  showScreen('setup-screen');
+});
 
-function downloadQR(){
-  if(qrImageData){
-    const a=document.createElement('a');
-    a.download='perihan-caglar-qr.png';
-    a.href=qrImageData;
-    a.click();
+function saveConfig() {
+  const dbUrl = document.getElementById('cfg-db-url').value.trim();
+  const apiKey = document.getElementById('cfg-api-key').value.trim();
+  const err = document.getElementById('setup-err');
+  if (!dbUrl.startsWith('https://')) { err.textContent = 'Geçerli bir Database URL girin (https:// ile başlamalı)'; return; }
+  if (apiKey.length < 10) { err.textContent = 'Geçerli bir API Key girin'; return; }
+  err.textContent = '';
+  const ok = initFirebase(apiKey, dbUrl);
+  if (ok) {
+    localStorage.setItem(LS_CFG, JSON.stringify({ apiKey, dbUrl }));
+    showToast('✓ Firebase bağlandı!');
+    setTimeout(() => showScreen('landing'), 700);
   } else {
-    // fallback: doğrudan API linkini indir
-    const url=window.location.href;
-    const encoded=encodeURIComponent(url);
-    const apiUrl=`https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encoded}&bgcolor=ffffff&color=2c2016&margin=15`;
-    const a=document.createElement('a');
-    a.href=apiUrl;
-    a.target='_blank';
-    a.download='perihan-caglar-qr.png';
-    a.click();
-    showToast('QR kod yeni sekmede açılıyor — sağ tık → kaydet');
+    err.textContent = 'Bağlantı kurulamadı — URL ve API Key\'i kontrol edin.';
   }
 }
 
-function copyURL(){
-  const url=window.location.href;
-  navigator.clipboard.writeText(url).then(()=>showToast('Link kopyalandı!')).catch(()=>{
-    showToast('Link: '+url,4000);
+// ── NAV ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if (id === 'admin-screen') loadAdminGallery();
+  if (id === 'qr-screen') buildQR();
+}
+
+function showToast(msg, dur=3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+function showLoading(txt='Yükleniyor...') {
+  document.getElementById('loading-text').textContent = txt;
+  document.getElementById('loading').classList.add('show');
+}
+function hideLoading() { document.getElementById('loading').classList.remove('show'); }
+
+// ── QR ──
+function buildQR() {
+  const url = window.location.href.split('?')[0];
+  document.getElementById('qr-url-box').textContent = url;
+  const src = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(url)}&color=2c2016&bgcolor=ffffff&margin=10`;
+  document.getElementById('qr-img').src = src;
+  document.getElementById('qr-dl-link').href = src;
+}
+function copyURL() {
+  const url = window.location.href.split('?')[0];
+  navigator.clipboard?.writeText(url).then(() => showToast('✓ Link kopyalandı!')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = url; ta.style.cssText='position:fixed;opacity:0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); showToast('✓ Link kopyalandı!');
   });
 }
 
-// FILE HANDLING
-const dropZone=document.getElementById('drop-zone');
-const fileInput=document.getElementById('file-input');
-const previewGrid=document.getElementById('preview-grid');
+// ── FILES ──
+document.getElementById('drop-zone').addEventListener('dragover', e=>{e.preventDefault();e.currentTarget.classList.add('dragover')});
+document.getElementById('drop-zone').addEventListener('dragleave', e=>e.currentTarget.classList.remove('dragover'));
+document.getElementById('drop-zone').addEventListener('drop', e=>{e.preventDefault();e.currentTarget.classList.remove('dragover');handleFiles(e.dataTransfer.files)});
+document.getElementById('file-input').addEventListener('change', e=>handleFiles(e.target.files));
 
-dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('dragover')});
-dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('dragover');handleFiles(e.dataTransfer.files)});
-fileInput.addEventListener('change',()=>handleFiles(fileInput.files));
-
-function handleFiles(files){
-  Array.from(files).forEach(f=>{
-    if(!f.type.startsWith('image/'))return;
+function handleFiles(files) {
+  Array.from(files).forEach(f => {
+    if (!f.type.startsWith('image/')) return;
     selectedFiles.push(f);
-    const reader=new FileReader();
-    reader.onload=e=>{
-      const div=document.createElement('div');
-      div.className='preview-item';
-      div.innerHTML=`<img src="${e.target.result}"><button class="remove-btn" onclick="removeFile(${selectedFiles.length-1})"><i class="ti ti-x"></i></button>`;
-      previewGrid.appendChild(div);
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const div = document.createElement('div');
+      div.className = 'preview-item';
+      div.innerHTML = `<img src="${ev.target.result}"><button class="remove-btn" onclick="removeFile(${selectedFiles.length-1})"><i class="ti ti-x"></i></button>`;
+      document.getElementById('preview-grid').appendChild(div);
     };
     reader.readAsDataURL(f);
   });
-  if(selectedFiles.length>0){
-    previewGrid.style.display='grid';
-    document.getElementById('upload-btn').disabled=false;
+  updateUI();
+}
+function updateUI() {
+  const n = selectedFiles.length;
+  document.getElementById('preview-grid').style.display = n ? 'grid' : 'none';
+  document.getElementById('upload-btn').disabled = !n;
+  const note = document.getElementById('size-note');
+  note.style.display = n ? 'block' : 'none';
+  note.textContent = n + ' fotoğraf seçildi — yüklemeden önce otomatik sıkıştırılacak';
+}
+function removeFile(idx) {
+  selectedFiles.splice(idx,1);
+  const grid = document.getElementById('preview-grid');
+  grid.innerHTML = '';
+  selectedFiles.forEach((f,i)=>{
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const div = document.createElement('div');
+      div.className = 'preview-item';
+      div.innerHTML = `<img src="${ev.target.result}"><button class="remove-btn" onclick="removeFile(${i})"><i class="ti ti-x"></i></button>`;
+      grid.appendChild(div);
+    };
+    reader.readAsDataURL(f);
+  });
+  updateUI();
+}
+
+function compressImage(file) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onerror = rej;
+    reader.onload = ev => {
+      const img = new Image();
+      img.onerror = rej;
+      img.onload = () => {
+        const MAX = 1000;
+        let w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          if (w >= h) { h = Math.round(h*MAX/w); w = MAX; }
+          else        { w = Math.round(w*MAX/h); h = MAX; }
+        }
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        res(c.toDataURL('image/jpeg', 0.7));
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── UPLOAD ──
+async function uploadPhotos() {
+  if (!fbDb) { showToast('Firebase bağlı değil — kuruluma gidin'); return; }
+  const guestName = document.getElementById('guest-name').value.trim() || 'Anonim Misafir';
+  if (!selectedFiles.length) { showToast('Önce fotoğraf seçin'); return; }
+  const btn = document.getElementById('upload-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2"></i> Kaydediliyor...';
+  document.getElementById('progress-bar').style.display = 'block';
+  const pf = document.getElementById('progress-fill');
+  try {
+    for (let i = 0; i < selectedFiles.length; i++) {
+      showLoading(`Sıkıştırılıyor (${i+1}/${selectedFiles.length})...`);
+      const data = await compressImage(selectedFiles[i]);
+      showLoading(`Firebase'e kaydediliyor (${i+1}/${selectedFiles.length})...`);
+      await fbPush({ guest: guestName, data, name: selectedFiles[i].name, ts: Date.now() });
+      pf.style.width = Math.round(((i+1)/selectedFiles.length)*100) + '%';
+    }
+    hideLoading();
+    showToast('🤍 ' + selectedFiles.length + ' fotoğraf paylaşıldı, teşekkürler!', 4000);
+    selectedFiles = [];
+    document.getElementById('preview-grid').innerHTML = '';
+    document.getElementById('guest-name').value = '';
+    document.getElementById('file-input').value = '';
+    updateUI();
+    setTimeout(()=>{ document.getElementById('progress-bar').style.display='none'; pf.style.width='0%'; }, 800);
+  } catch(e) {
+    hideLoading();
+    showToast('Hata: ' + (e.message||'Bilinmeyen hata'), 5000);
+    console.error(e);
+  }
+  btn.disabled = false; btn.innerHTML = '<i class="ti ti-upload"></i> Paylaş';
+}
+
+// ── ADMIN ──
+function adminLogin() {
+  if (document.getElementById('admin-pass').value === ADMIN_PASS) {
+    document.getElementById('login-error').textContent = '';
+    document.getElementById('admin-pass').value = '';
+    showScreen('admin-screen');
+  } else {
+    document.getElementById('login-error').textContent = 'Şifre hatalı.';
   }
 }
 
-function removeFile(idx){
-  selectedFiles.splice(idx,1);
-  renderPreviews();
-  if(!selectedFiles.length){previewGrid.style.display='none';document.getElementById('upload-btn').disabled=true;}
-}
-
-function renderPreviews(){
-  previewGrid.innerHTML='';
-  selectedFiles.forEach((f,i)=>{
-    const reader=new FileReader();
-    reader.onload=e=>{
-      const div=document.createElement('div');
-      div.className='preview-item';
-      div.innerHTML=`<img src="${e.target.result}"><button class="remove-btn" onclick="removeFile(${i})"><i class="ti ti-x"></i></button>`;
-      previewGrid.appendChild(div);
-    };
-    reader.readAsDataURL(f);
-  });
-}
-
-async function uploadPhotos(){
-  const guestName=document.getElementById('guest-name').value.trim()||'Anonim Misafir';
-  if(!selectedFiles.length){showToast('Önce fotoğraf seçin');return;}
-  const btn=document.getElementById('upload-btn');
-  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader"></i> Yükleniyor...';
-  const pb=document.getElementById('progress-bar');
-  const pf=document.getElementById('progress-fill');
-  pb.style.display='block';
-  try{
-    let photos=[];
-    try{const ex=await window.storage.get('wedding_photos_pc2026',true);if(ex)photos=JSON.parse(ex.value);}catch(e){}
-    for(let i=0;i<selectedFiles.length;i++){
-      const data=await fileToBase64(selectedFiles[i]);
-      photos.push({id:Date.now()+'_'+i,guest:guestName,data,name:selectedFiles[i].name,ts:Date.now()});
-      pf.style.width=Math.round(((i+1)/selectedFiles.length)*100)+'%';
-    }
-    await window.storage.set('wedding_photos_pc2026',JSON.stringify(photos),true);
-    showToast('🤍 '+selectedFiles.length+' fotoğraf paylaşıldı, teşekkürler!',3000);
-    selectedFiles=[];previewGrid.innerHTML='';previewGrid.style.display='none';
-    document.getElementById('guest-name').value='';fileInput.value='';
-    setTimeout(()=>{pb.style.display='none';pf.style.width='0%';},600);
-  }catch(e){showToast('Hata oluştu, tekrar deneyin');}
-  btn.disabled=false;btn.innerHTML='<i class="ti ti-upload"></i> Paylaş';
-}
-
-function fileToBase64(file){
-  return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});
-}
-
-function adminLogin(){
-  const pass=document.getElementById('admin-pass').value;
-  if(pass===ADMIN_PASS){document.getElementById('login-error').textContent='';showScreen('admin-screen');}
-  else document.getElementById('login-error').textContent='Şifre hatalı. Tekrar deneyin.';
-}
-
-async function loadAdminGallery(){
-  const gallery=document.getElementById('admin-gallery');
-  gallery.innerHTML=`<div class="empty-state"><i class="ti ti-photo" style="font-size:32px;opacity:0.4"></i><p>Yükleniyor...</p></div>`;
-  try{
-    let photos=[];
-    try{const ex=await window.storage.get('wedding_photos_pc2026',true);if(ex)photos=JSON.parse(ex.value);}catch(e){}
-    allPhotos=photos;
-  }catch(e){allPhotos=[];}
-  const uniqueGuests=[...new Set(allPhotos.map(p=>p.guest))];
-  const today=new Date().toDateString();
-  document.getElementById('stat-photos').textContent=allPhotos.length;
-  document.getElementById('stat-guests').textContent=uniqueGuests.length;
-  document.getElementById('stat-today').textContent=allPhotos.filter(p=>new Date(p.ts).toDateString()===today).length;
-  document.getElementById('admin-sub').textContent=allPhotos.length+' fotoğraf · '+uniqueGuests.length+' misafir';
-  const fb=document.getElementById('filter-bar');fb.innerHTML='';
-  const allBtn=document.createElement('button');
-  allBtn.className='filter-btn active';allBtn.textContent='Tümü';
-  allBtn.onclick=()=>{activeFilter='all';renderGallery();};fb.appendChild(allBtn);
-  uniqueGuests.forEach(g=>{
-    const b=document.createElement('button');b.className='filter-btn';b.textContent=g;
-    b.onclick=()=>{activeFilter=g;renderGallery();};fb.appendChild(b);
-  });
+async function loadAdminGallery() {
+  if (!fbDb) {
+    document.getElementById('admin-gallery').innerHTML = '<div class="empty-state"><i class="ti ti-wifi-off"></i><p>Firebase bağlı değil.</p></div>';
+    return;
+  }
+  showLoading('Fotoğraflar yükleniyor...');
+  try { allPhotos = await fbGetAll(); }
+  catch(e) { allPhotos = []; }
+  hideLoading();
+  const uniqueGuests = [...new Set(allPhotos.map(p=>p.guest))];
+  const today = new Date().toDateString();
+  document.getElementById('stat-photos').textContent = allPhotos.length;
+  document.getElementById('stat-guests').textContent = uniqueGuests.length;
+  document.getElementById('stat-today').textContent = allPhotos.filter(p=>new Date(p.ts).toDateString()===today).length;
+  document.getElementById('admin-sub').textContent = allPhotos.length + ' fotoğraf · ' + uniqueGuests.length + ' misafir';
+  const fb = document.getElementById('filter-bar');
+  fb.innerHTML = '';
+  mkBtn(fb,'Tümü',activeFilter==='all',()=>{activeFilter='all';renderGallery();});
+  uniqueGuests.forEach(g=>mkBtn(fb,g,activeFilter===g,()=>{activeFilter=g;renderGallery();}));
   renderGallery();
-  document.getElementById('dl-all-btn').style.display=allPhotos.length?'block':'none';
+  document.getElementById('dl-all-btn').style.display = allPhotos.length ? 'flex' : 'none';
 }
-
+function mkBtn(container,label,active,cb){
+  const b=document.createElement('button');
+  b.className='filter-btn'+(active?' active':'');
+  b.textContent=label; b.onclick=cb;
+  container.appendChild(b);
+}
 function renderGallery(){
   const gallery=document.getElementById('admin-gallery');
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.textContent==='Tümü'?activeFilter==='all':b.textContent===activeFilter));
   const filtered=activeFilter==='all'?allPhotos:allPhotos.filter(p=>p.guest===activeFilter);
   if(!filtered.length){
-    gallery.innerHTML=`<div class="empty-state"><i class="ti ti-camera-off" style="font-size:32px;opacity:0.4"></i><p>Henüz fotoğraf yüklenmedi.<br>Misafirler QR kodu okutunca burada görünecek.</p></div>`;
+    gallery.innerHTML='<div class="empty-state"><i class="ti ti-camera-off"></i><p>Henüz fotoğraf yüklenmedi.<br>Misafirler QR kodu okutunca burada görünecek.</p></div>';
     return;
   }
-  const grid=document.createElement('div');grid.className='photos-grid';
+  const grid=document.createElement('div'); grid.className='photos-grid';
   filtered.slice().reverse().forEach(p=>{
-    const card=document.createElement('div');card.className='photo-card';
+    const card=document.createElement('div'); card.className='photo-card';
     const d=new Date(p.ts);
     const t=d.toLocaleDateString('tr-TR',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
-    card.innerHTML=`<img src="${p.data}" alt="" onclick="openLightbox('${p.data}')" style="cursor:zoom-in">
-      <div class="photo-meta"><div><div class="guest-name">${esc(p.guest)}</div><div class="photo-time">${t}</div></div>
-      <button class="dl-btn" onclick="downloadPhoto('${p.id}')" title="İndir"><i class="ti ti-download"></i></button></div>`;
+    card.innerHTML=`<img src="${p.data}" alt="" onclick="openLightbox('${p.id}')">
+      <div class="photo-meta">
+        <div><div class="guest-name">${esc(p.guest)}</div><div class="photo-time">${t}</div></div>
+        <button class="dl-btn" onclick="dlPhoto('${p.id}')" title="İndir"><i class="ti ti-download"></i></button>
+      </div>`;
     grid.appendChild(card);
   });
-  gallery.innerHTML='';gallery.appendChild(grid);
+  gallery.innerHTML=''; gallery.appendChild(grid);
 }
-
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function downloadPhoto(id){
-  const p=allPhotos.find(x=>x.id===id);if(!p)return;
-  const a=document.createElement('a');a.href=p.data;a.download='Perihan_Caglar_'+esc(p.guest)+'_'+id+'.jpg';a.click();
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function dlPhoto(id){
+  const p=allPhotos.find(x=>x.id===id); if(!p)return;
+  const a=document.createElement('a'); a.href=p.data; a.download='PC_'+p.guest.replace(/\s+/g,'_')+'_'+id+'.jpg'; a.click();
 }
 function downloadAll(){
   const filtered=activeFilter==='all'?allPhotos:allPhotos.filter(p=>p.guest===activeFilter);
-  filtered.forEach((p,i)=>setTimeout(()=>{const a=document.createElement('a');a.href=p.data;a.download='PC_'+esc(p.guest)+'_'+i+'.jpg';a.click();},i*200));
+  if(!filtered.length){showToast('İndirilecek fotoğraf yok');return;}
+  filtered.forEach((p,i)=>setTimeout(()=>{const a=document.createElement('a');a.href=p.data;a.download='PC_'+p.guest.replace(/\s+/g,'_')+'_'+i+'.jpg';a.click();},i*300));
   showToast(filtered.length+' fotoğraf indiriliyor...');
 }
-function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').classList.add('open');}
+function openLightbox(id){
+  const p=allPhotos.find(x=>x.id===id); if(!p)return;
+  document.getElementById('lb-img').src=p.data;
+  document.getElementById('lightbox').classList.add('open');
+}
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
 document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
 </script>
+</body>
+</html>
