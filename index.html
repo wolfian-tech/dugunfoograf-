@@ -429,16 +429,16 @@ async function loadAdminGallery() {
     document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:40px;color:var(--muted)">Firebase bağlı değil.</p>';
     return;
   }
-  showLoading('Anılar yükleniyor...');
+
+  allPhotos = [];
+  document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:30px;color:var(--muted);font-size:13px">Fotoğraflar yükleniyor...</p>';
+  document.getElementById('admin-sub').textContent = 'Yükleniyor...';
+
   try {
-    const snap = await fbDb.ref('photos').orderByKey().once('value');
-    allPhotos = [];
-    if (snap.exists()) {
-      snap.forEach(child => allPhotos.push({ id: child.key, ...child.val() }));
-    }
-    hideLoading();
-    if (!allPhotos.length) {
-      document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:40px;color:var(--muted)">Henüz fotoğraf yok.</p>';
+    const snap = await fbDb.ref('photos').once('value');
+
+    if (!snap.exists()) {
+      document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:40px;color:var(--muted)">Henüz fotoğraf yüklenmedi.</p>';
       document.getElementById('stat-photos').textContent = 0;
       document.getElementById('stat-guests').textContent = 0;
       document.getElementById('stat-today').textContent = 0;
@@ -446,27 +446,66 @@ async function loadAdminGallery() {
       document.getElementById('dl-all-btn').style.display = 'none';
       return;
     }
-    const guests = [...new Set(allPhotos.map(p => p.guest))];
-    const today = new Date().toDateString();
-    document.getElementById('stat-photos').textContent = allPhotos.length;
-    document.getElementById('stat-guests').textContent = guests.length;
-    document.getElementById('stat-today').textContent = allPhotos.filter(p => new Date(p.ts).toDateString() === today).length;
-    document.getElementById('admin-sub').textContent = allPhotos.length+' fotoğraf · '+guests.length+' misafir';
 
-    // filter bar
-    const fb = document.getElementById('filter-bar');
-    fb.innerHTML = '<button class="filter-btn '+(activeFilter==='all'?'active':'')+'" onclick="setFilter(\'all\')">Tümü</button>';
-    guests.forEach(g => {
-      const safe = g.replace(/'/g,"\\'");
-      fb.innerHTML += '<button class="filter-btn '+(activeFilter===g?'active':'')+'" onclick="setFilter(\''+safe+'\')">'+escHtml(g)+'</button>';
+    // Her child'i tek tek oku — forEach güvenilir
+    snap.forEach(function(child) {
+      var val = child.val();
+      if (val && val.data) {
+        allPhotos.push({
+          id: child.key,
+          guest: val.guest || 'Anonim',
+          data: val.data,
+          ts: val.ts || 0
+        });
+      }
     });
-    renderGallery();
-    document.getElementById('dl-all-btn').style.display = 'flex';
+
   } catch(e) {
-    hideLoading();
-    showToast('Veri yüklenemedi: '+e.message, 5000);
+    document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:40px;color:#c0392b">Yüklenemedi: ' + e.message + '</p>';
+    showToast('Hata: ' + e.message, 6000);
+    return;
   }
+
+  if (!allPhotos.length) {
+    document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:40px;color:var(--muted)">Henüz fotoğraf yüklenmedi.</p>';
+    document.getElementById('stat-photos').textContent = 0;
+    document.getElementById('stat-guests').textContent = 0;
+    document.getElementById('stat-today').textContent = 0;
+    document.getElementById('admin-sub').textContent = 'Henüz fotoğraf yüklenmedi';
+    document.getElementById('dl-all-btn').style.display = 'none';
+    return;
+  }
+
+  var guests = [];
+  allPhotos.forEach(function(p) { if (guests.indexOf(p.guest) === -1) guests.push(p.guest); });
+  var today = new Date().toDateString();
+
+  document.getElementById('stat-photos').textContent = allPhotos.length;
+  document.getElementById('stat-guests').textContent = guests.length;
+  document.getElementById('stat-today').textContent = allPhotos.filter(function(p){ return new Date(p.ts).toDateString() === today; }).length;
+  document.getElementById('admin-sub').textContent = allPhotos.length + ' fotoğraf · ' + guests.length + ' misafir';
+
+  var fb = document.getElementById('filter-bar');
+  fb.innerHTML = '';
+  var allBtn = document.createElement('button');
+  allBtn.className = 'filter-btn' + (activeFilter === 'all' ? ' active' : '');
+  allBtn.textContent = 'Tümü (' + allPhotos.length + ')';
+  allBtn.onclick = function(){ setFilter('all'); };
+  fb.appendChild(allBtn);
+
+  guests.forEach(function(g) {
+    var count = allPhotos.filter(function(p){ return p.guest === g; }).length;
+    var btn = document.createElement('button');
+    btn.className = 'filter-btn' + (activeFilter === g ? ' active' : '');
+    btn.textContent = g + ' (' + count + ')';
+    btn.onclick = function(){ setFilter(g); };
+    fb.appendChild(btn);
+  });
+
+  renderGallery();
+  document.getElementById('dl-all-btn').style.display = 'flex';
 }
+
 
 function setFilter(val) {
   activeFilter = val;
