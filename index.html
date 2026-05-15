@@ -20,7 +20,7 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .top-bar{padding:1.4rem 1.4rem 0;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;letter-spacing:.15em;color:var(--gold-dark);text-transform:uppercase}
-.back-btn{background:none;border:.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'Jost',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s}
+.back-btn{background:none;border:.5px solid var(--border);border-radius:20px;padding:6px 15px;font-family:'Jost',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
 .back-btn:hover{border-color:var(--gold);color:var(--gold-dark)}
 .lbl{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:6px}
 .txt-input{width:100%;border:.5px solid var(--border);border-radius:4px;padding:11px 13px;font-family:'Jost',sans-serif;font-size:13px;background:#fff;color:var(--ink);outline:none;transition:border .2s}
@@ -31,6 +31,8 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
 .btn-secondary{background:transparent;color:var(--gold-dark);border:.5px solid var(--gold);border-radius:4px;padding:13px 22px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.08em;cursor:pointer;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-secondary:hover{background:var(--gold-light)}
+
+/* ── LANDING ── */
 #landing{background:linear-gradient(160deg,#fdfaf6 0%,#f5ede8 100%)}
 .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center}
 .couple-names{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-style:italic;color:var(--gold-dark);margin-bottom:.3rem;letter-spacing:.04em}
@@ -38,6 +40,8 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
 .hero h1 em{font-style:italic;color:var(--rose-dark)}
 .hero p{font-size:13px;color:var(--muted);margin-bottom:2.2rem;max-width:270px;line-height:1.85}
 .btn-group{display:flex;flex-direction:column;gap:12px;width:100%;max-width:280px}
+
+/* ── UPLOAD ── */
 #upload-screen .content{flex:1;padding:1.8rem 1.4rem;display:flex;flex-direction:column;gap:1.4rem}
 .section-title{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;color:var(--ink);margin-bottom:.2rem}
 .section-sub{font-size:12px;color:var(--muted)}
@@ -45,37 +49,109 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
 .drop-zone:hover,.drop-zone.dragover{border-color:var(--gold);background:var(--gold-light)}
 .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .drop-text{font-size:13px;color:var(--muted);text-align:center;line-height:1.7}
+.drop-text strong{color:var(--gold-dark)}
 .preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .preview-item{aspect-ratio:1;border-radius:6px;overflow:hidden;position:relative;background:#f0e8e0}
 .preview-item img{width:100%;height:100%;object-fit:cover;display:block}
 .remove-btn{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.5);border:none;border-radius:50%;width:22px;height:22px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px}
 .progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;display:none}
 .progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
-#admin-screen .content{flex:1;padding:1.4rem;display:flex;flex-direction:column;gap:1.4rem}
+
+/* ── ADMIN ── */
+#admin-screen .content{flex:1;padding:1.4rem;display:flex;flex-direction:column;gap:1.2rem;padding-bottom:2rem}
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .stat-card{background:#fff;border:.5px solid var(--border);border-radius:8px;padding:.9rem;text-align:center}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--gold-dark)}
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
-.filter-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px;margin-bottom:5px}
-.filter-btn{background:#fff;border:.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Jost',sans-serif}
+.filter-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.filter-bar::-webkit-scrollbar{height:3px}
+.filter-bar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.filter-btn{background:#fff;border:.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s;font-family:'Jost',sans-serif}
 .filter-btn.active{background:var(--gold-light);border-color:var(--gold);color:var(--gold-dark)}
-.photos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.photo-card{background:#fff;border:.5px solid var(--border);border-radius:8px;overflow:hidden}
-.photo-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;cursor:zoom-in}
-.photo-meta{padding:8px 10px;display:flex;align-items:center;justify-content:space-between}
-.guest-name{font-size:12px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
-.photo-time{font-size:10px;color:var(--muted)}
-.dl-btn{background:none;border:none;cursor:pointer;color:var(--gold);font-size:18px}
+
+/* Fotoğraf grid — 3 sütun, küçük kartlar */
+.photos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+@media(min-width:600px){.photos-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.photos-grid{grid-template-columns:repeat(5,1fr)}}
+.photo-card{background:#fff;border:.5px solid var(--border);border-radius:6px;overflow:hidden}
+.photo-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;cursor:zoom-in;transition:opacity .2s}
+.photo-card img:hover{opacity:.88}
+.photo-meta{padding:5px 7px;display:flex;align-items:center;justify-content:space-between;gap:4px}
+.guest-name{font-size:10px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.photo-time{font-size:9px;color:var(--muted);flex-shrink:0}
+.dl-btn{background:none;border:none;cursor:pointer;color:var(--gold);font-size:15px;padding:2px;line-height:1;flex-shrink:0}
+.dl-btn:hover{color:var(--gold-dark)}
+
+/* ── QR ── */
+#qr-screen .content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:2rem 1.4rem;
+  gap:1.2rem;
+  text-align:center;
+}
+.qr-card{
+  background:#fff;
+  border:.5px solid var(--border);
+  border-radius:12px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  width:fit-content;
+}
+#qr-img{
+  width:200px;
+  height:200px;
+  display:block;
+  border-radius:4px;
+}
+.qr-lbl{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--gold-dark)}
+.url-box{
+  font-size:11px;color:var(--gold-dark);
+  word-break:break-all;
+  max-width:300px;
+  background:var(--gold-light);
+  padding:9px 13px;
+  border-radius:6px;
+  line-height:1.7;
+  width:100%;
+  max-width:280px;
+}
+.qr-note{font-size:12px;color:var(--muted);max-width:260px;line-height:1.85}
+.btn-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  width:100%;
+  max-width:300px;
+}
+.btn-row>*{flex:1;min-width:120px;font-size:12px;padding:11px 14px}
+
+/* ── LIGHTBOX ── */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999;display:none;align-items:center;justify-content:center;padding:1rem}
 .lightbox.open{display:flex}
 .lightbox img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:4px}
 .lb-close{position:fixed;top:14px;right:14px;background:#fff;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:18px;z-index:1000}
+
+/* ── TOAST / LOADING ── */
 .toast{position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 22px;border-radius:24px;font-size:13px;z-index:1001;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;max-width:92vw;text-align:center}
 .toast.show{opacity:1}
 .loading{position:fixed;inset:0;background:rgba(253,250,246,.9);z-index:998;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px}
 .loading.show{display:flex}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:13px;color:var(--muted)}
+
+/* ── ADMIN LOGIN ── */
+#admin-login .content{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1.4rem}
+.login-card{background:#fff;border:.5px solid var(--border);border-radius:12px;padding:2rem;width:100%;max-width:310px;display:flex;flex-direction:column;gap:1.2rem}
+.login-card h2{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:300;text-align:center}
 </style>
 </head>
 <body>
@@ -87,6 +163,7 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
   <img id="lb-img" src="" alt="">
 </div>
 
+<!-- ══ LANDING ══ -->
 <div class="screen active" id="landing">
   <div class="top-bar"><div class="logo">Perihan &amp; Çağlar</div></div>
   <div class="hero">
@@ -107,6 +184,7 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
   </div>
 </div>
 
+<!-- ══ UPLOAD ══ -->
 <div class="screen" id="upload-screen">
   <div class="top-bar">
     <div class="logo">Perihan &amp; Çağlar</div>
@@ -124,39 +202,44 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
     <div class="drop-zone" id="drop-zone">
       <input type="file" id="file-input" accept="image/*" multiple>
       <i class="ti ti-photo-plus" style="font-size:36px;color:var(--rose)"></i>
-      <div class="drop-text"><strong>Fotoğraf seçin</strong> veya buraya sürükleyin</div>
+      <div class="drop-text"><strong>Fotoğraf seçin</strong> veya buraya sürükleyin<br><span style="font-size:11px">JPG, PNG, WEBP — çoklu seçim desteklenir</span></div>
     </div>
     <div class="preview-grid" id="preview-grid" style="display:none"></div>
     <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-    <button class="btn-primary" id="upload-btn" onclick="uploadPhotos()" disabled style="width:100%"><i class="ti ti-upload"></i> Paylaş</button>
+    <button class="btn-primary" id="upload-btn" onclick="uploadPhotos()" disabled style="width:100%">
+      <i class="ti ti-upload"></i> Paylaş
+    </button>
   </div>
 </div>
 
+<!-- ══ ADMIN LOGIN ══ -->
 <div class="screen" id="admin-login">
   <div class="top-bar">
     <div class="logo">Perihan &amp; Çağlar</div>
     <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
   </div>
   <div class="content">
-    <div class="hero">
-      <div class="couple-names">Giriş Yap</div>
-      <div style="width:100%; max-width:300px; text-align:left">
+    <div class="login-card">
+      <h2>Perihan &amp; Çağlar</h2>
+      <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.7">Özel giriş — şifrenizi girin</p>
+      <div>
         <label class="lbl">Şifre</label>
         <input class="txt-input" type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
-        <div class="err" id="login-error"></div>
-        <button class="btn-primary" onclick="adminLogin()" style="width:100%; margin-top:10px">Giriş Yap</button>
       </div>
+      <div class="err" id="login-error"></div>
+      <button class="btn-primary" onclick="adminLogin()" style="width:100%">Giriş Yap</button>
     </div>
   </div>
 </div>
 
+<!-- ══ ADMIN GALLERY ══ -->
 <div class="screen" id="admin-screen">
   <div class="top-bar">
     <div class="logo">Perihan &amp; Çağlar</div>
     <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-door-exit"></i> Çıkış</button>
   </div>
   <div class="content">
-    <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
       <div>
         <div class="section-title">Tüm Anılar</div>
         <div class="section-sub" id="admin-sub">Yükleniyor...</div>
@@ -170,26 +253,28 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
     </div>
     <div class="filter-bar" id="filter-bar"></div>
     <div id="admin-gallery"></div>
-    <button class="btn-primary" id="dl-all-btn" onclick="downloadAll()" style="display:none;width:100%;margin-top:20px;margin-bottom:30px"><i class="ti ti-download"></i> Tümünü İndir</button>
+    <button class="btn-primary" id="dl-all-btn" onclick="downloadAll()" style="display:none;width:100%;margin-top:8px">
+      <i class="ti ti-download"></i> Tümünü İndir
+    </button>
   </div>
 </div>
 
-<!-- QR -->
+<!-- ══ QR ══ -->
 <div class="screen" id="qr-screen">
   <div class="top-bar">
     <div class="logo">Perihan &amp; Çağlar</div>
     <button class="back-btn" onclick="showScreen('landing')"><i class="ti ti-arrow-left"></i> Geri</button>
   </div>
   <div class="content">
-    <div class="section-title">Masa QR Kodu</div>
+    <div class="section-title" style="text-align:center">Masa QR Kodu</div>
     <div class="qr-card">
-      <img id="qr-img" src="" alt="QR Kod">
+      <canvas id="qr-canvas" width="200" height="200" style="border-radius:4px;display:block"></canvas>
       <div class="qr-lbl">Perihan &amp; Çağlar — 2026</div>
     </div>
     <div class="url-box" id="qr-url-box">URL yükleniyor...</div>
-    <div class="qr-note">Bu QR kodu masa kartlarına ekleyin. Misafirler okutarak fotoğraf yükleme ekranına ulaşır.</div>
+    <div class="qr-note">Bu QR kodu masa kartlarına ekleyin. Misafirler telefonlarıyla okutarak fotoğraf yükleme ekranına ulaşır.</div>
     <div class="btn-row">
-      <a id="qr-dl-link" class="btn-primary" href="#" target="_blank"><i class="ti ti-download"></i> İndir</a>
+      <button class="btn-primary" onclick="downloadQR()"><i class="ti ti-download"></i> İndir</button>
       <button class="btn-secondary" onclick="copyURL()"><i class="ti ti-copy"></i> Linki Kopyala</button>
     </div>
   </div>
@@ -199,30 +284,26 @@ html,body{min-height:100%;background:var(--cream);color:var(--ink);font-family:'
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
 <script>
-// ════════════════════════════════════════════
-//  CONFIG & GLOBAL STATE
-// ════════════════════════════════════════════
-const DB_URL = "https://perihan-caglar-1e61b-default-rtdb.firebaseio.com/";
-const API_KEY = "AIzaSyA1fqKxHU9RTIU5ANjH-hCyHOSH4ycP0qs";
-const ADMIN_PASS_KEY = '123';
+// ── CONFIG ──
+const DB_URL       = "https://perihan-caglar-1e61b-default-rtdb.firebaseio.com/";
+const API_KEY      = "AIzaSyA1fqKxHU9RTIU5ANjH-hCyHOSH4ycP0qs";
+const ADMIN_PASS_KEY = 'edya2026';
 
 let fbDb = null;
 let allPhotos = [];
 let activeFilter = 'all';
+let selectedFiles = [];
 
-// ════════════════════════════════════════════
-//  INIT FIREBASE
-// ════════════════════════════════════════════
+// ── FIREBASE INIT ──
 window.addEventListener('load', () => {
   try {
-    const app = firebase.initializeApp({ apiKey: API_KEY, databaseURL: DB_URL }, 'pc2026_final');
+    const existing = firebase.apps.find(a => a.name === 'pc2026');
+    const app = existing || firebase.initializeApp({ apiKey: API_KEY, databaseURL: DB_URL }, 'pc2026');
     fbDb = firebase.database(app);
-  } catch(e) { console.error("Firebase Hatası:", e); }
+  } catch(e) { console.error('Firebase:', e); }
 });
 
-// ════════════════════════════════════════════
-//  SCREEN MGT
-// ════════════════════════════════════════════
+// ── NAV ──
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -231,23 +312,18 @@ function showScreen(id) {
   if (id === 'qr-screen') buildQR();
 }
 
-function showToast(msg) {
+function showToast(msg, dur=3000) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(() => t.classList.remove('show'), dur);
 }
-
-function showLoading(txt) {
+function showLoading(txt='Yükleniyor...') {
   document.getElementById('loading-text').textContent = txt;
   document.getElementById('loading').classList.add('show');
 }
-
 function hideLoading() { document.getElementById('loading').classList.remove('show'); }
 
-// ════════════════════════════════════════════
-//  UPLOAD LOGIC
-// ════════════════════════════════════════════
-let selectedFiles = [];
+// ── FILE HANDLING ──
 document.getElementById('file-input').addEventListener('change', e => {
   Array.from(e.target.files).forEach(f => {
     if (!f.type.startsWith('image/')) return;
@@ -256,7 +332,7 @@ document.getElementById('file-input').addEventListener('change', e => {
     reader.onload = ev => {
       const div = document.createElement('div');
       div.className = 'preview-item';
-      div.innerHTML = `<img src="${ev.target.result}"><button class="remove-btn" onclick="removeFile(${selectedFiles.length-1})"><i class="ti ti-x"></i></button>`;
+      div.innerHTML = '<img src="'+ev.target.result+'"><button class="remove-btn" onclick="removeFile('+(selectedFiles.length-1)+')"><i class="ti ti-x"></i></button>';
       document.getElementById('preview-grid').appendChild(div);
     };
     reader.readAsDataURL(f);
@@ -265,9 +341,8 @@ document.getElementById('file-input').addEventListener('change', e => {
   document.getElementById('upload-btn').disabled = false;
 });
 
-function removeFile(idx) { selectedFiles.splice(idx, 1); renderPreview(); }
-
-function renderPreview() {
+function removeFile(idx) {
+  selectedFiles.splice(idx, 1);
   const grid = document.getElementById('preview-grid');
   grid.innerHTML = '';
   selectedFiles.forEach((f, i) => {
@@ -275,16 +350,19 @@ function renderPreview() {
     reader.onload = ev => {
       const div = document.createElement('div');
       div.className = 'preview-item';
-      div.innerHTML = `<img src="${ev.target.result}"><button class="remove-btn" onclick="removeFile(${i})"><i class="ti ti-x"></i></button>`;
+      div.innerHTML = '<img src="'+ev.target.result+'"><button class="remove-btn" onclick="removeFile('+i+')"><i class="ti ti-x"></i></button>';
       grid.appendChild(div);
     };
     reader.readAsDataURL(f);
   });
-  if(!selectedFiles.length) { grid.style.display='none'; document.getElementById('upload-btn').disabled=true; }
+  if (!selectedFiles.length) {
+    grid.style.display = 'none';
+    document.getElementById('upload-btn').disabled = true;
+  }
 }
 
 function compressImage(file) {
-  return new Promise((res) => {
+  return new Promise(res => {
     const reader = new FileReader();
     reader.onload = ev => {
       const img = new Image();
@@ -292,8 +370,8 @@ function compressImage(file) {
         const MAX = 1000;
         let w = img.width, h = img.height;
         if (w > MAX || h > MAX) {
-          if (w >= h) { h = Math.round(h * MAX / w); w = MAX; }
-          else { w = Math.round(w * MAX / h); h = MAX; }
+          if (w >= h) { h = Math.round(h*MAX/w); w = MAX; }
+          else { w = Math.round(w*MAX/h); h = MAX; }
         }
         const c = document.createElement('canvas');
         c.width = w; c.height = h;
@@ -306,138 +384,249 @@ function compressImage(file) {
   });
 }
 
+// ── UPLOAD ──
 async function uploadPhotos() {
+  if (!fbDb) { showToast('Firebase bağlı değil'); return; }
   const guestName = document.getElementById('guest-name').value.trim() || 'Anonim Misafir';
+  if (!selectedFiles.length) { showToast('Önce fotoğraf seçin'); return; }
   const btn = document.getElementById('upload-btn');
   btn.disabled = true;
   document.getElementById('progress-bar').style.display = 'block';
+  const pf = document.getElementById('progress-fill');
   try {
     for (let i = 0; i < selectedFiles.length; i++) {
-      showLoading(`Yükleniyor (${i+1}/${selectedFiles.length})...`);
+      showLoading('Yükleniyor ('+(i+1)+'/'+selectedFiles.length+')...');
       const dataURL = await compressImage(selectedFiles[i]);
       await fbDb.ref('photos').push({ guest: guestName, data: dataURL, ts: Date.now() });
-      document.getElementById('progress-fill').style.width = ((i+1)/selectedFiles.length)*100 + '%';
+      pf.style.width = ((i+1)/selectedFiles.length*100) + '%';
     }
     hideLoading();
     showToast('🤍 Teşekkürler, paylaşıldı!');
-    selectedFiles = []; renderPreview();
+    selectedFiles = [];
+    document.getElementById('preview-grid').innerHTML = '';
+    document.getElementById('preview-grid').style.display = 'none';
     document.getElementById('guest-name').value = '';
-    setTimeout(() => { document.getElementById('progress-bar').style.display = 'none'; }, 1000);
-  } catch (e) { hideLoading(); showToast('Hata oluştu.'); }
+    document.getElementById('file-input').value = '';
+    document.getElementById('upload-btn').disabled = true;
+    setTimeout(() => { document.getElementById('progress-bar').style.display='none'; pf.style.width='0%'; }, 1000);
+  } catch(e) { hideLoading(); showToast('Hata oluştu: '+e.message); }
   btn.disabled = false;
 }
 
-// ════════════════════════════════════════════
-//  ADMIN LOGIC (FIXED: ALL GUESTS VISIBLE)
-// ════════════════════════════════════════════
+// ── ADMIN ──
 function adminLogin() {
   if (document.getElementById('admin-pass').value === ADMIN_PASS_KEY) {
+    document.getElementById('login-error').textContent = '';
+    document.getElementById('admin-pass').value = '';
     showScreen('admin-screen');
-  } else { document.getElementById('login-error').textContent = 'Hatalı şifre.'; }
+  } else {
+    document.getElementById('login-error').textContent = 'Hatalı şifre.';
+  }
 }
 
 async function loadAdminGallery() {
+  if (!fbDb) {
+    document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:40px;color:var(--muted)">Firebase bağlı değil.</p>';
+    return;
+  }
   showLoading('Anılar yükleniyor...');
   try {
-    const snap = await fbDb.ref('photos').once('value');
+    const snap = await fbDb.ref('photos').orderByKey().once('value');
     allPhotos = [];
     if (snap.exists()) {
-      snap.forEach(child => { allPhotos.push({ id: child.key, ...child.val() }); });
+      snap.forEach(child => allPhotos.push({ id: child.key, ...child.val() }));
     }
     hideLoading();
-
     if (!allPhotos.length) {
       document.getElementById('admin-gallery').innerHTML = '<p style="text-align:center;padding:40px;color:var(--muted)">Henüz fotoğraf yok.</p>';
+      document.getElementById('stat-photos').textContent = 0;
+      document.getElementById('stat-guests').textContent = 0;
+      document.getElementById('stat-today').textContent = 0;
+      document.getElementById('admin-sub').textContent = 'Henüz fotoğraf yüklenmedi';
+      document.getElementById('dl-all-btn').style.display = 'none';
       return;
     }
-
-    // Update Stats
     const guests = [...new Set(allPhotos.map(p => p.guest))];
     const today = new Date().toDateString();
     document.getElementById('stat-photos').textContent = allPhotos.length;
     document.getElementById('stat-guests').textContent = guests.length;
     document.getElementById('stat-today').textContent = allPhotos.filter(p => new Date(p.ts).toDateString() === today).length;
-    document.getElementById('admin-sub').textContent = `${allPhotos.length} fotoğraf paylaşıldı`;
+    document.getElementById('admin-sub').textContent = allPhotos.length+' fotoğraf · '+guests.length+' misafir';
 
-    // Filter Bar
+    // filter bar
     const fb = document.getElementById('filter-bar');
-    fb.innerHTML = `<button class="filter-btn ${activeFilter==='all'?'active':''}" onclick="setFilter('all')">Tümü</button>`;
+    fb.innerHTML = '<button class="filter-btn '+(activeFilter==='all'?'active':'')+'" onclick="setFilter(\'all\')">Tümü</button>';
     guests.forEach(g => {
-      fb.innerHTML += `<button class="filter-btn ${activeFilter===g?'active':''}" onclick="setFilter('${g.replace(/'/g,"\\'")}')">${g}</button>`;
+      const safe = g.replace(/'/g,"\\'");
+      fb.innerHTML += '<button class="filter-btn '+(activeFilter===g?'active':'')+'" onclick="setFilter(\''+safe+'\')">'+escHtml(g)+'</button>';
     });
-
     renderGallery();
-  } catch (e) { hideLoading(); showToast('Veri hatası!'); }
+    document.getElementById('dl-all-btn').style.display = 'flex';
+  } catch(e) {
+    hideLoading();
+    showToast('Veri yüklenemedi: '+e.message, 5000);
+  }
 }
 
 function setFilter(val) {
   activeFilter = val;
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    b.classList.toggle('active', b.textContent === (val === 'all' ? 'Tümü' : val));
-  });
+  document.querySelectorAll('.filter-btn').forEach(b =>
+    b.classList.toggle('active', b.textContent === (val==='all'?'Tümü':val))
+  );
   renderGallery();
 }
 
 function renderGallery() {
   const container = document.getElementById('admin-gallery');
-  container.innerHTML = '';
   const filtered = activeFilter === 'all' ? allPhotos : allPhotos.filter(p => p.guest === activeFilter);
-  
+  if (!filtered.length) {
+    container.innerHTML = '<p style="text-align:center;padding:30px;color:var(--muted);font-size:13px">Bu misafirden fotoğraf yok.</p>';
+    return;
+  }
   const grid = document.createElement('div');
   grid.className = 'photos-grid';
   filtered.slice().reverse().forEach(p => {
     const card = document.createElement('div');
     card.className = 'photo-card';
-    const time = new Date(p.ts).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
-    card.innerHTML = `
-      <img src="${p.data}" onclick="openLightbox('${p.id}')" loading="lazy">
-      <div class="photo-meta">
-        <div><div class="guest-name">${p.guest}</div><div class="photo-time">${time}</div></div>
-        <button class="dl-btn" onclick="dlPhoto('${p.id}')"><i class="ti ti-download"></i></button>
-      </div>`;
+    const d = new Date(p.ts);
+    const dateStr = d.toLocaleDateString('tr-TR',{day:'numeric',month:'short'});
+    const timeStr = d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+    card.innerHTML =
+      '<img src="'+p.data+'" onclick="openLightbox(\''+p.id+'\')" loading="lazy">'+
+      '<div class="photo-meta">'+
+        '<div style="min-width:0">'+
+          '<div class="guest-name">'+escHtml(p.guest)+'</div>'+
+          '<div class="photo-time">'+dateStr+' '+timeStr+'</div>'+
+        '</div>'+
+        '<button class="dl-btn" onclick="dlPhoto(\''+p.id+'\')" title="İndir"><i class="ti ti-download"></i></button>'+
+      '</div>';
     grid.appendChild(card);
   });
+  container.innerHTML = '';
   container.appendChild(grid);
-  document.getElementById('dl-all-btn').style.display = 'flex';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function dlPhoto(id) {
   const p = allPhotos.find(x => x.id === id);
-  if(!p) return;
-  const a = document.createElement('a'); a.href = p.data;
-  a.download = `PC_${p.guest.replace(/\s+/g,'_')}_${id}.jpg`; a.click();
+  if (!p) return;
+  const a = document.createElement('a');
+  a.href = p.data;
+  a.download = 'PC_'+p.guest.replace(/\s+/g,'_')+'_'+id+'.jpg';
+  a.click();
 }
 
 function downloadAll() {
   const filtered = activeFilter === 'all' ? allPhotos : allPhotos.filter(p => p.guest === activeFilter);
-  showToast(`${filtered.length} fotoğraf hazırlanıyor...`);
+  showToast(filtered.length+' fotoğraf indiriliyor...');
   filtered.forEach((p, i) => {
     setTimeout(() => {
-      const a = document.createElement('a'); a.href = p.data;
-      a.download = `PC_Galeri_${i+1}.jpg`; a.click();
-    }, i * 400);
+      const a = document.createElement('a');
+      a.href = p.data;
+      a.download = 'PC_Galeri_'+(i+1)+'.jpg';
+      a.click();
+    }, i * 350);
   });
 }
 
-// ════════════════════════════════════════════
-//  UTILS
-// ════════════════════════════════════════════
-function buildQR() {
-  const url = window.location.href.split('?')[0].split('#')[0];
-  document.getElementById('qr-url-box').textContent = url;
-  const src = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=' + encodeURIComponent(url) + '&color=2c2016&bgcolor=ffffff&margin=10';
-  document.getElementById('qr-img').src = src;
-  document.getElementById('qr-dl-link').href = src;
+// ── QR — saf JS, dış servise bağımlı değil ──
+// QR encode algoritması (Reed-Solomon, MIT lisanslı, kazuhikoarase/qrcode-generator'dan)
+var QRErrorCorrectLevel={L:1,M:0,Q:3,H:2};
+function QRCode(typeNumber,errorCorrectLevel){this.typeNumber=typeNumber;this.errorCorrectLevel=errorCorrectLevel;this.modules=null;this.moduleCount=0;this.dataCache=null;this.dataList=[];}
+QRCode.prototype={addData:function(data){this.dataList.push(new QR8bitByte(data));this.dataCache=null;},isDark:function(row,col){if(row<0||this.moduleCount<=row||col<0||this.moduleCount<=col)throw new Error(row+","+col);return this.modules[row][col];},getModuleCount:function(){return this.moduleCount;},make:function(){this.makeImpl(false,this.getBestMaskPattern());},makeImpl:function(test,maskPattern){this.moduleCount=this.typeNumber*4+17;this.modules=new Array(this.moduleCount);for(var row=0;row<this.moduleCount;row++){this.modules[row]=new Array(this.moduleCount);for(var col=0;col<this.moduleCount;col++)this.modules[row][col]=null;}this.setupPositionProbePattern(0,0);this.setupPositionProbePattern(this.moduleCount-7,0);this.setupPositionProbePattern(0,this.moduleCount-7);this.setupPositionAdjustPattern();this.setupTimingPattern();this.setupTypeInfo(test,maskPattern);if(this.typeNumber>=7)this.setupTypeNumber(test);if(this.dataCache==null)this.dataCache=QRCode.createData(this.typeNumber,this.errorCorrectLevel,this.dataList);this.mapData(this.dataCache,maskPattern);},setupPositionProbePattern:function(row,col){for(var r=-1;r<=7;r++){if(row+r<=-1||this.moduleCount<=row+r)continue;for(var c=-1;c<=7;c++){if(col+c<=-1||this.moduleCount<=col+c)continue;this.modules[row+r][col+c]=(0<=r&&r<=6&&c==0)||(0<=r&&r<=6&&c==6)||(r==0&&0<=c&&c<=6)||(r==6&&0<=c&&c<=6)||(2<=r&&r<=4&&2<=c&&c<=4);}}},getBestMaskPattern:function(){var minLostPoint=0,pattern=0;for(var i=0;i<8;i++){this.makeImpl(true,i);var lostPoint=QRUtil.getLostPoint(this);if(i==0||minLostPoint>lostPoint){minLostPoint=lostPoint;pattern=i;}}return pattern;},setupTimingPattern:function(){for(var r=8;r<this.moduleCount-8;r++)if(this.modules[r][6]==null)this.modules[r][6]=(r%2==0);for(var c=8;c<this.moduleCount-8;c++)if(this.modules[6][c]==null)this.modules[6][c]=(c%2==0);},setupPositionAdjustPattern:function(){var pos=QRUtil.getPatternPosition(this.typeNumber);for(var i=0;i<pos.length;i++)for(var j=0;j<pos.length;j++){var row=pos[i],col=pos[j];if(this.modules[row][col]!=null)continue;for(var r=-2;r<=2;r++)for(var c=-2;c<=2;c++)this.modules[row+r][col+c]=(r==-2||r==2||c==-2||c==2||(r==0&&c==0));}},setupTypeNumber:function(test){var bits=QRUtil.getBCHTypeNumber(this.typeNumber);for(var i=0;i<18;i++){var mod=(!test&&((bits>>i)&1)==1);this.modules[Math.floor(i/3)][i%3+this.moduleCount-8-3]=mod;}for(var i=0;i<18;i++){var mod=(!test&&((bits>>i)&1)==1);this.modules[i%3+this.moduleCount-8-3][Math.floor(i/3)]=mod;}},setupTypeInfo:function(test,maskPattern){var data=(this.errorCorrectLevel<<3)|maskPattern,bits=QRUtil.getBCHTypeInfo(data);for(var i=0;i<15;i++){var mod=(!test&&((bits>>i)&1)==1);if(i<6)this.modules[i][8]=mod;else if(i<8)this.modules[i+1][8]=mod;else this.modules[this.moduleCount-15+i][8]=mod;}for(var i=0;i<15;i++){var mod=(!test&&((bits>>i)&1)==1);if(i<8)this.modules[8][this.moduleCount-i-1]=mod;else if(i<9)this.modules[8][15-i-1+1]=mod;else this.modules[8][15-i-1]=mod;}this.modules[this.moduleCount-8][8]=(!test);},mapData:function(data,maskPattern){var inc=-1,row=this.moduleCount-1,bitIndex=7,byteIndex=0;for(var col=this.moduleCount-1;col>0;col-=2){if(col==6)col--;while(true){for(var c=0;c<2;c++){if(this.modules[row][col-c]==null){var dark=false;if(byteIndex<data.length)dark=((data[byteIndex]>>>bitIndex)&1)==1;var mask=QRUtil.getMask(maskPattern,row,col-c);if(mask)dark=!dark;this.modules[row][col-c]=dark;bitIndex--;if(bitIndex==-1){byteIndex++;bitIndex=7;}}}row+=inc;if(row<0||this.moduleCount<=row){row-=inc;inc=-inc;break;}}}},};
+QRCode.PAD0=0xEC;QRCode.PAD1=0x11;
+QRCode.createData=function(typeNumber,errorCorrectLevel,dataList){var rsBlocks=QRRSBlock.getRSBlocks(typeNumber,errorCorrectLevel),buffer=new QRBitBuffer();for(var i=0;i<dataList.length;i++){var data=dataList[i];buffer.put(data.mode,4);buffer.put(data.getLength(),QRUtil.getLengthInBits(data.mode,typeNumber));data.write(buffer);}var totalDataCount=0;for(var i=0;i<rsBlocks.length;i++)totalDataCount+=rsBlocks[i].dataCount;if(buffer.getLengthInBits()>totalDataCount*8)throw new Error("code length overflow. ("+buffer.getLengthInBits()+">"+totalDataCount*8+")");if(buffer.getLengthInBits()+4<=totalDataCount*8)buffer.put(0,4);while(buffer.getLengthInBits()%8!=0)buffer.putBit(false);while(true){if(buffer.getLengthInBits()>=totalDataCount*8)break;buffer.put(QRCode.PAD0,8);if(buffer.getLengthInBits()>=totalDataCount*8)break;buffer.put(QRCode.PAD1,8);}return QRCode.createBytes(buffer,rsBlocks);};
+QRCode.createBytes=function(buffer,rsBlocks){var offset=0,maxDcCount=0,maxEcCount=0,dcdata=new Array(rsBlocks.length),ecdata=new Array(rsBlocks.length);for(var r=0;r<rsBlocks.length;r++){var dcCount=rsBlocks[r].dataCount,ecCount=rsBlocks[r].totalCount-dcCount;maxDcCount=Math.max(maxDcCount,dcCount);maxEcCount=Math.max(maxEcCount,ecCount);dcdata[r]=new Array(dcCount);for(var i=0;i<dcdata[r].length;i++)dcdata[r][i]=0xff&buffer.buffer[i+offset];offset+=dcCount;var rsPoly=QRUtil.getErrorCorrectPolynomial(ecCount),rawPoly=new QRPolynomial(dcdata[r],rsPoly.getLength()-1),modPoly=rawPoly.mod(rsPoly);ecdata[r]=new Array(rsPoly.getLength()-1);for(var i=0;i<ecdata[r].length;i++){var modIndex=i+modPoly.getLength()-ecdata[r].length;ecdata[r][i]=(modIndex>=0)?modPoly.get(modIndex):0;}}var totalCodeCount=0;for(var i=0;i<rsBlocks.length;i++)totalCodeCount+=rsBlocks[i].totalCount;var data=new Array(totalCodeCount),index=0;for(var i=0;i<maxDcCount;i++)for(var r=0;r<rsBlocks.length;r++)if(i<dcdata[r].length)data[index++]=dcdata[r][i];for(var i=0;i<maxEcCount;i++)for(var r=0;r<rsBlocks.length;r++)if(i<ecdata[r].length)data[index++]=ecdata[r][i];return data;};
+var QRUtil={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:(1<<10)|(1<<8)|(1<<5)|(1<<4)|(1<<2)|(1<<1)|(1<<0),G18:(1<<12)|(1<<11)|(1<<10)|(1<<9)|(1<<8)|(1<<5)|(1<<2)|(1<<0),G15_MASK:(1<<14)|(1<<12)|(1<<10)|(1<<4)|(1<<1),getBCHTypeInfo:function(data){var d=data<<10;while(QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G15)>=0)d^=(QRUtil.G15<<(QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G15)));return((data<<10)|d)^QRUtil.G15_MASK;},getBCHTypeNumber:function(data){var d=data<<12;while(QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G18)>=0)d^=(QRUtil.G18<<(QRUtil.getBCHDigit(d)-QRUtil.getBCHDigit(QRUtil.G18)));return(data<<12)|d;},getBCHDigit:function(data){var digit=0;while(data!=0){digit++;data>>>=1;}return digit;},getPatternPosition:function(typeNumber){return QRUtil.PATTERN_POSITION_TABLE[typeNumber-1];},getMask:function(maskPattern,i,j){switch(maskPattern){case 0:return(i+j)%2==0;case 1:return i%2==0;case 2:return j%3==0;case 3:return(i+j)%3==0;case 4:return(Math.floor(i/2)+Math.floor(j/3))%2==0;case 5:return(i*j)%2+(i*j)%3==0;case 6:return((i*j)%2+(i*j)%3)%2==0;case 7:return((i+j)%2+(i*j)%3)%2==0;}throw new Error("bad maskPattern:"+maskPattern);},getErrorCorrectPolynomial:function(errorCorrectLength){var a=new QRPolynomial([1],0);for(var i=0;i<errorCorrectLength;i++)a=a.multiply(new QRPolynomial([1,QRMath.gexp(i)],0));return a;},getLengthInBits:function(mode,type){if(1<=type&&type<10){if(mode==1)return 10;if(mode==2)return 9;if(mode==4)return 8;if(mode==8)return 8;}else if(type<27){if(mode==1)return 12;if(mode==2)return 11;if(mode==4)return 16;if(mode==8)return 10;}else{if(mode==1)return 14;if(mode==2)return 13;if(mode==4)return 16;if(mode==8)return 12;}throw new Error("mode:"+mode+"/type:"+type);},getLostPoint:function(qrCode){var moduleCount=qrCode.getModuleCount(),lostPoint=0;for(var row=0;row<moduleCount;row++)for(var col=0;col<moduleCount;col++){var sameCount=0,dark=qrCode.isDark(row,col);for(var r=-1;r<=1;r++){if(row+r<0||moduleCount<=row+r)continue;for(var c=-1;c<=1;c++){if(col+c<0||moduleCount<=col+c)continue;if(r==0&&c==0)continue;if(dark==qrCode.isDark(row+r,col+c))sameCount++;}}if(sameCount>5)lostPoint+=(3+sameCount-5);}for(var row=0;row<moduleCount-1;row++)for(var col=0;col<moduleCount-1;col++){var count=0;if(qrCode.isDark(row,col))count++;if(qrCode.isDark(row+1,col))count++;if(qrCode.isDark(row,col+1))count++;if(qrCode.isDark(row+1,col+1))count++;if(count==0||count==4)lostPoint+=3;}for(var row=0;row<moduleCount;row++)for(var col=0;col<moduleCount-6;col++)if(qrCode.isDark(row,col)&&!qrCode.isDark(row,col+1)&&qrCode.isDark(row,col+2)&&qrCode.isDark(row,col+3)&&qrCode.isDark(row,col+4)&&!qrCode.isDark(row,col+5)&&qrCode.isDark(row,col+6))lostPoint+=40;for(var col=0;col<moduleCount;col++)for(var row=0;row<moduleCount-6;row++)if(qrCode.isDark(row,col)&&!qrCode.isDark(row+1,col)&&qrCode.isDark(row+2,col)&&qrCode.isDark(row+3,col)&&qrCode.isDark(row+4,col)&&!qrCode.isDark(row+5,col)&&qrCode.isDark(row+6,col))lostPoint+=40;var darkCount=0;for(var col=0;col<moduleCount;col++)for(var row=0;row<moduleCount;row++)if(qrCode.isDark(row,col))darkCount++;var ratio=Math.abs(100*darkCount/moduleCount/moduleCount-50)/5;lostPoint+=ratio*10;return lostPoint;}};
+var QRMath={glog:function(n){if(n<1)throw new Error("glog("+n+")");return QRMath.LOG_TABLE[n];},gexp:function(n){while(n<0)n+=255;while(n>=256)n-=255;return QRMath.EXP_TABLE[n];},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)};for(var i=0;i<8;i++)QRMath.EXP_TABLE[i]=1<<i;for(var i=8;i<256;i++)QRMath.EXP_TABLE[i]=QRMath.EXP_TABLE[i-4]^QRMath.EXP_TABLE[i-5]^QRMath.EXP_TABLE[i-6]^QRMath.EXP_TABLE[i-8];for(var i=0;i<255;i++)QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]]=i;
+function QRPolynomial(num,shift){if(num.length==undefined)throw new Error(num.length+"/"+shift);var offset=0;while(offset<num.length&&num[offset]==0)offset++;this.num=new Array(num.length-offset+shift);for(var i=0;i<num.length-offset;i++)this.num[i]=num[i+offset];}QRPolynomial.prototype={get:function(index){return this.num[index];},getLength:function(){return this.num.length;},multiply:function(e){var num=new Array(this.getLength()+e.getLength()-1);for(var i=0;i<this.getLength();i++)for(var j=0;j<e.getLength();j++)num[i+j]^=QRMath.gexp(QRMath.glog(this.get(i))+QRMath.glog(e.get(j)));return new QRPolynomial(num,0);},mod:function(e){if(this.getLength()-e.getLength()<0)return this;var ratio=QRMath.glog(this.get(0))-QRMath.glog(e.get(0)),num=new Array(this.getLength());for(var i=0;i<this.getLength();i++)num[i]=this.get(i);for(var i=0;i<e.getLength();i++)num[i]^=QRMath.gexp(QRMath.glog(e.get(i))+ratio);return new QRPolynomial(num,0).mod(e);}};
+function QRRSBlock(totalCount,dataCount){this.totalCount=totalCount;this.dataCount=dataCount;}QRRSBlock.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]];QRRSBlock.getRSBlocks=function(typeNumber,errorCorrectLevel){var rsBlock=QRRSBlock.getRsBlockTable(typeNumber,errorCorrectLevel);if(rsBlock==undefined)throw new Error("bad rs block @ typeNumber:"+typeNumber+"/errorCorrectLevel:"+errorCorrectLevel);var length=rsBlock.length/3,list=[];for(var i=0;i<length;i++){var count=rsBlock[i*3+0],totalCount=rsBlock[i*3+1],dataCount=rsBlock[i*3+2];for(var j=0;j<count;j++)list.push(new QRRSBlock(totalCount,dataCount));}return list;};QRRSBlock.getRsBlockTable=function(typeNumber,errorCorrectLevel){switch(errorCorrectLevel){case QRErrorCorrectLevel.L:return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+0];case QRErrorCorrectLevel.M:return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+1];case QRErrorCorrectLevel.Q:return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+2];case QRErrorCorrectLevel.H:return QRRSBlock.RS_BLOCK_TABLE[(typeNumber-1)*4+3];default:return undefined;}};
+function QRBitBuffer(){this.buffer=[];this.length=0;}QRBitBuffer.prototype={get:function(index){var bufIndex=Math.floor(index/8);return((this.buffer[bufIndex]>>>(7-index%8))&1)==1;},put:function(num,length){for(var i=0;i<length;i++)this.putBit(((num>>>(length-i-1))&1)==1);},getLengthInBits:function(){return this.length;},putBit:function(bit){var bufIndex=Math.floor(this.length/8);if(this.buffer.length<=bufIndex)this.buffer.push(0);if(bit)this.buffer[bufIndex]|=(0x80>>>(this.length%8));this.length++;}};
+function QR8bitByte(data){this.mode=4;this.data=data;}QR8bitByte.prototype={getLength:function(){return this.data.length;},write:function(buffer){for(var i=0;i<this.data.length;i++)buffer.put(this.data.charCodeAt(i),8);}};
+
+function makeQR(text, canvas, size) {
+  // Uygun type number bul
+  var typeNum = 1;
+  for (var t = 1; t <= 40; t++) {
+    var qr = new QRCode(t, QRErrorCorrectLevel.M);
+    qr.addData(text);
+    try { qr.make(); typeNum = t; break; } catch(e) { typeNum = t+1; }
+  }
+  var qr = new QRCode(typeNum, QRErrorCorrectLevel.M);
+  qr.addData(text);
+  qr.make();
+  var count = qr.getModuleCount();
+  var ctx = canvas.getContext('2d');
+  var margin = 3;
+  var cell = Math.floor((size - margin*2) / count);
+  canvas.width = count * cell + margin*2;
+  canvas.height = count * cell + margin*2;
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#2c2016';
+  for (var r = 0; r < count; r++) {
+    for (var c = 0; c < count; c++) {
+      if (qr.isDark(r, c)) {
+        ctx.fillRect(margin + c*cell, margin + r*cell, cell, cell);
+      }
+    }
+  }
 }
 
-function copyURL() { navigator.clipboard.writeText(window.location.href.split('#')[0]); showToast('Link kopyalandı!'); }
+function buildQR() {
+  var url = window.location.href.split('?')[0].split('#')[0];
+  document.getElementById('qr-url-box').textContent = url;
+  var canvas = document.getElementById('qr-canvas');
+  try {
+    makeQR(url, canvas, 200);
+  } catch(e) {
+    // fallback: URL'i yaz
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fdfaf6';
+    ctx.fillRect(0,0,200,200);
+    ctx.fillStyle = '#8a7c6e';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('GitHub Pages\'de açınca', 100, 90);
+    ctx.fillText('QR burada görünecek', 100, 110);
+  }
+}
+
+function downloadQR() {
+  var canvas = document.getElementById('qr-canvas');
+  var a = document.createElement('a');
+  a.download = 'perihan-caglar-qr.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+  showToast('QR kod indirildi!');
+}
+
+function copyURL() {
+  const url = window.location.href.split('#')[0];
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => showToast('✓ Link kopyalandı!')).catch(() => _fallbackCopy(url));
+  } else { _fallbackCopy(url); }
+}
+function _fallbackCopy(url) {
+  const ta = document.createElement('textarea');
+  ta.value = url; ta.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+  document.body.removeChild(ta); showToast('✓ Link kopyalandı!');
+}
+
+// ── LIGHTBOX ──
 function openLightbox(id) {
   const p = allPhotos.find(x => x.id === id);
-  if(!p) return;
+  if (!p) return;
   document.getElementById('lb-img').src = p.data;
   document.getElementById('lightbox').classList.add('open');
 }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.getElementById('lightbox').addEventListener('click', function(e) { if(e.target===this) closeLightbox(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 </script>
 </body>
 </html>
