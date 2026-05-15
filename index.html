@@ -361,35 +361,22 @@ function removeFile(idx) {
   }
 }
 
-// Firebase Realtime DB node limiti: 10MB
-// Base64 overhead ~%33 → max ham veri ~7.5MB
-// Hedef: orijinal boyutu koru, sadece 10MB sınırını geç
 function compressImage(file) {
   return new Promise(res => {
-    // Orijinal dosya 7MB altındaysa hiç dokunma, direkt oku
-    if (file.size < 7 * 1024 * 1024) {
-      const reader = new FileReader();
-      reader.onload = ev => res(ev.target.result);
-      reader.readAsDataURL(file);
-      return;
-    }
-    // 7MB üstündeyse: boyutu koru, kaliteyi 0.92 ile sıkıştır
     const reader = new FileReader();
     reader.onload = ev => {
       const img = new Image();
       img.onload = () => {
-        // Çözünürlüğü olduğu gibi bırak — max 4096px üstünde hafifçe küçült
-        const MAX = 4096;
+        const MAX = 1000;
         let w = img.width, h = img.height;
         if (w > MAX || h > MAX) {
-          if (w >= h) { h = Math.round(h * MAX / w); w = MAX; }
-          else { w = Math.round(w * MAX / h); h = MAX; }
+          if (w >= h) { h = Math.round(h*MAX/w); w = MAX; }
+          else { w = Math.round(w*MAX/h); h = MAX; }
         }
         const c = document.createElement('canvas');
         c.width = w; c.height = h;
         c.getContext('2d').drawImage(img, 0, 0, w, h);
-        // Kalite 0.92 — gözle fark edilmez kayıp, boyut kabul edilebilir
-        res(c.toDataURL('image/jpeg', 0.92));
+        res(c.toDataURL('image/jpeg', 0.7));
       };
       img.src = ev.target.result;
     };
@@ -408,7 +395,7 @@ async function uploadPhotos() {
   const pf = document.getElementById('progress-fill');
   try {
     for (let i = 0; i < selectedFiles.length; i++) {
-      showLoading('Firebase\'e yükleniyor ('+(i+1)+'/'+selectedFiles.length+')...');
+      showLoading('Yükleniyor ('+(i+1)+'/'+selectedFiles.length+')...');
       const dataURL = await compressImage(selectedFiles[i]);
       await fbDb.ref('photos').push({ guest: guestName, data: dataURL, ts: Date.now() });
       pf.style.width = ((i+1)/selectedFiles.length*100) + '%';
